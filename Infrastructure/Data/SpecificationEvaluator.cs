@@ -5,99 +5,81 @@ using System.Text;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
     public class SpecificationEvaluator<T> where T : BaseEntity
     {
-        public static IQueryable<T> GetQuery(IQueryable<T> inputQuery, ISpecification<T> specification)
+        public static IQueryable<T> GetQuery(IQueryable<T> query, ISpecification<T> spec)
         {
-            // Apply criteria
-            if (specification.Criteria != null)
+            if (spec.Criteria != null)
             {
-                inputQuery = inputQuery.Where(specification.Criteria);
+                query = query.Where(spec.Criteria); // x => x.Brand == brand
             }
 
-
-            // Apply ordering
-            if (specification.OrderBy != null)
+            if (spec.OrderBy != null)
             {
-                inputQuery = inputQuery.OrderBy(specification.OrderBy);
-            }
-            if (specification.OrderByDescending != null)
-            {
-                inputQuery = inputQuery.OrderByDescending(specification.OrderByDescending);
+                query = query.OrderBy(spec.OrderBy);
             }
 
-            // Apply distinct
-            if (specification.IsDistinct)
+            if (spec.OrderByDescending != null)
             {
-                inputQuery = inputQuery.Distinct();
+                query = query.OrderByDescending(spec.OrderByDescending);
             }
 
+            if (spec.IsDistinct)
+            {
+                query = query.Distinct();
+            }
 
-            //// Apply paging
-            //if (specification.IsPagingEnabled)
-            //{
-            //    query = query.Skip(specification.Skip).Take(specification.Take);
-            //}
-            //// Apply includes
-            //foreach (var include in specification.Includes)
-            //{
-            //    query = query.Include(include);
-            //}
-            return inputQuery;
+            if (spec.IsPagingEnabled)
+            {
+                query = query.Skip(spec.Skip).Take(spec.Take);
+            }
+
+            query = spec.Includes.Aggregate(query, (current, include) => current.Include(include));
+            query = spec.IncludeStrings.Aggregate(query, (current, include) => current.Include(include));
+
+            return query;
         }
 
-
-
-
-        public static IQueryable<TResult> GetQuery<TSpec, TResult>(IQueryable<T> inputQuery, ISpecification<T, TResult> specification)
+        public static IQueryable<TResult> GetQuery<TSpec, TResult>(IQueryable<T> query,
+            ISpecification<T, TResult> spec)
         {
-            // Apply criteria
-            if (specification.Criteria != null)
+            if (spec.Criteria != null)
             {
-                inputQuery = inputQuery.Where(specification.Criteria);
+                query = query.Where(spec.Criteria); // x => x.Brand == brand
             }
 
-
-            // Apply ordering
-            if (specification.OrderBy != null)
+            if (spec.OrderBy != null)
             {
-                inputQuery = inputQuery.OrderBy(specification.OrderBy);
-            }
-            if (specification.OrderByDescending != null)
-            {
-                inputQuery = inputQuery.OrderByDescending(specification.OrderByDescending);
+                query = query.OrderBy(spec.OrderBy);
             }
 
-
-            //// Apply paging
-            //if (specification.IsPagingEnabled)
-            //{
-            //    query = query.Skip(specification.Skip).Take(specification.Take);
-            //}
-            //// Apply includes
-            //foreach (var include in specification.Includes)
-            //{
-            //    query = query.Include(include);
-            //}
-
-            var resultQuery = inputQuery as IQueryable<TResult>;
-
-            if( specification.Select != null)
+            if (spec.OrderByDescending != null)
             {
-                resultQuery = inputQuery.Select(specification.Select);
+                query = query.OrderByDescending(spec.OrderByDescending);
             }
 
+            var selectQuery = query as IQueryable<TResult>;
 
-            // Apply distinct
-            if (specification.IsDistinct)
+            if (spec.Select != null)
             {
-                resultQuery = resultQuery?.Distinct();
+                selectQuery = query.Select(spec.Select);
             }
 
-            return resultQuery ?? inputQuery.Cast<TResult>();
+            if (spec.IsDistinct)
+            {
+                selectQuery = selectQuery?.Distinct();
+            }
+
+            if (spec.IsPagingEnabled)
+            {
+                selectQuery = selectQuery?.Skip(spec.Skip).Take(spec.Take);
+            }
+
+            return selectQuery ?? query.Cast<TResult>();
         }
     }
 }

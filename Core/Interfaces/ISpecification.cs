@@ -12,16 +12,17 @@ namespace Core.Interfaces
         Expression<Func<T, bool>>? Criteria { get; }
         Expression<Func<T, object>>? OrderBy { get; }
         Expression<Func<T, object>>? OrderByDescending { get; }
+        List<Expression<Func<T, object>>> Includes { get; }
+        List<string> IncludeStrings { get; } // For ThenInclude
+
         bool IsDistinct { get; }
+        int Take { get; }
+        int Skip { get; }
+        bool IsPagingEnabled { get; }
+
+        IQueryable<T> ApplyCriteria(IQueryable<T> query);
 
 
-        // Func<IQueryable<T>, IOrderedQueryable<T>> OrderBy { get; }
-        // Func<IQueryable<T>, IOrderedQueryable<T>> OrderByDescending { get; }
-        // List<Expression<Func<T, object>>> Includes { get; }
-        // Expression<Func<T, object>> GroupBy { get; }
-        // int Take { get; }
-        // int Skip { get; }
-        // bool IsPagingEnabled { get; }
     }
 
     public interface ISpecification<T, TResult> : ISpecification<T>
