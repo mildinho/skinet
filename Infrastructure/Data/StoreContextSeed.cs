@@ -24,6 +24,18 @@ namespace Infrastructure.Data
                 context.Products.AddRange(productList);
                 await context.SaveChangesAsync();
             }
+
+            if (!context.ProdutoSAV.Any())
+            {
+
+                var produtcs = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/produto_sav.json");
+
+                var productList = JsonSerializer.Deserialize<List<ProdutoSAV>>(produtcs);
+                if (productList == null) return;
+
+                context.ProdutoSAV.AddRange(productList);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

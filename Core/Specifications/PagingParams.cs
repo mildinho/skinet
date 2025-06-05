@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Specifications
 {
-    public class PagingParams
+    public class  PagingParams
     {
         private const int MaxPageSize = 50;
 
@@ -17,7 +17,7 @@ namespace Core.Specifications
             set => _pageIndex = (value <= 0) ? 1 : value;
         }
 
-        private int _pageSize = 6;
+        private int _pageSize = 20;
         public int PageSize
         {
             get => _pageSize;

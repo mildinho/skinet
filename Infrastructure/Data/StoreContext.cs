@@ -13,6 +13,7 @@ namespace Infrastructure.Data
     {
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProdutoSAV> ProdutoSAV { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -22,6 +23,7 @@ namespace Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProdutoSAVConfiguration).Assembly);
         }
     }
 
