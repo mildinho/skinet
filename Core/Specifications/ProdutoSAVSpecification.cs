@@ -15,7 +15,7 @@ namespace Core.Specifications
          (string.IsNullOrEmpty(specParams.Search) || x.cdbar == specParams.Search) ||
          (string.IsNullOrEmpty(specParams.Search) || x.cdbar2 == specParams.Search) ||
          (string.IsNullOrEmpty(specParams.Search) || x.descr.Contains(specParams.Search)) &&
-        (specParams.Fornecedores.Count == 0 || specParams.Fornecedores.Contains(x.idparceiro)) 
+        (specParams.Fornecedores.Count == 0 || specParams.Fornecedores.Contains(x.idparceiro))
         )
 
 

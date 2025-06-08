@@ -25,17 +25,17 @@ namespace Infrastructure.Data
                 await context.SaveChangesAsync();
             }
 
-            if (!context.ProdutoSAV.Any())
-            {
+            //if (!context.ProdutoSAV.Any())
+            //{
 
-                var produtcs = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/produto_sav.json");
+            //    var produtcs = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/produto_sav.json");
 
-                var productList = JsonSerializer.Deserialize<List<ProdutoSAV>>(produtcs);
-                if (productList == null) return;
+            //    var productList = JsonSerializer.Deserialize<List<ProdutoSAV>>(produtcs);
+            //    if (productList == null) return;
 
-                context.ProdutoSAV.AddRange(productList);
-                await context.SaveChangesAsync();
-            }
+            //    context.ProdutoSAV.AddRange(productList);
+            //    await context.SaveChangesAsync();
+            //}
         }
     }
 }
