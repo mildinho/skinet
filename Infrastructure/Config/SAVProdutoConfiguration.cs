@@ -10,15 +10,18 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Config
 {
-    public class ProdutoSAVConfiguration : IEntityTypeConfiguration<ProdutoSAV>
+    public class SAVProdutoConfiguration : IEntityTypeConfiguration<SAVProduto>
     {
-        public void Configure(EntityTypeBuilder<ProdutoSAV> builder)
+        public void Configure(EntityTypeBuilder<SAVProduto> builder)
         {
             //builder.Property(x => x.Price).HasColumnType("decimal(18,4)");
-            builder.HasIndex(x => x.refx);
+            builder.HasIndex(x => x.referencia);
             builder.HasIndex(x => x.idparceiro);
-            builder.HasIndex(x => x.nrfabr);
-            builder.HasIndex(x => x.nrorig);
+            builder.HasIndex(x => x.numero_fabrica);
+            builder.HasIndex(x => x.numero_original);
+            builder.HasIndex(x => x.codigobarra01);
+            builder.HasIndex(x => x.codigobarra02);
+            builder.HasIndex(x => x.conversao);
         }
     }
 }

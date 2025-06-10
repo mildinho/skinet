@@ -1,0 +1,16 @@
+<div class="container mt-5 p-4 bg-gray-100 rounded-lg">
+    <h1 class="text-2xl font-semibold mb-4">Internal Server Error</h1>
+    @if (error) {
+        <h5 class="text-red-600">Error: {{ error.message }}</h5>
+        <p class="mb-2">Error: {{ error.error }}</p>
+        <p class="mb-2">Error: {{ error.error.errors }}</p>
+        <p class="mb-2">Error: {{ error.error.errors.length }}</p>
+
+
+    } @else {
+        <h5 class="text-xl font-semibold mb-4">Error: An unexpected error occurred</h5>
+        <mat-card class="p-4 bg-white">
+            <code class="block whitespace-pre-wrap">{{ error.details }}</code>
+        </mat-card>
+    }
+</div>

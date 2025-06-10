@@ -13,7 +13,9 @@ namespace Infrastructure.Data
     {
 
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProdutoSAV> ProdutoSAV { get; set; }
+        public DbSet<SAVProduto> SAVProduto { get; set; }
+        public DbSet<SAVProdutoDetalhe> SAVProdutoDetalhe { get; set; }
+        public DbSet<SAVProdutoImagem> SAVProdutoImagem { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -23,7 +25,9 @@ namespace Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProdutoSAVConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVProdutoConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVProdutoDetalheConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVProdutoImagemConfiguration).Assembly);
         }
     }
 

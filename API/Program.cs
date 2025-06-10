@@ -13,7 +13,7 @@ builder.Services.AddDbContext<StoreContext>( opt =>
 });
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<IProdutoSAVRepository, ProdutoSAVRepository>();
+builder.Services.AddScoped<ISAVProdutoRepository, SAVProdutoRepository>();
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddCors();
 

@@ -6,13 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
 
-    public class ProdutoSAVController(IGenericRepository<ProdutoSAV> produtoSAVRepository) : BaseAPIController
+    public class SAVProdutoController(IGenericRepository<SAVProduto> produtoSAVRepository) : BaseAPIController
     {
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<ProdutoSAV>>> GetProducts(
-            [FromQuery] ProdutoSAVSpecParams specParams)
+        public async Task<ActionResult<IReadOnlyList<SAVProduto>>> GetProducts(
+            [FromQuery] SAVProdutoSpecParams specParams)
         {
-            var spec = new ProdutoSAVSpecification(specParams);
+            var spec = new SAVProdutoSpecification(specParams);
 
 
 
@@ -21,7 +21,7 @@ namespace API.Controllers
 
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<ProdutoSAV>> GetProduct(int id)
+        public async Task<ActionResult<SAVProduto>> GetProduct(int id)
         {
             var obj = await produtoSAVRepository.GetByIdAsync(id);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Specifications
 {
-    public class ProdutoSAVSpecParams : PagingParams
+    public class SAVProdutoSpecParams : PagingParams
     {
         private List<string> _fornecedores = new List<string>();
         private string? _search;
