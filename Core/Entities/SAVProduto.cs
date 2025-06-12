@@ -19,5 +19,6 @@ namespace Core.Entities
 
         public virtual List<SAVProdutoImagem>? imagens { get; set; } = [];
         public virtual List<SAVProdutoDetalhe>? savprodutodetalhe { get; set; } = [];
+        public virtual List<SAVDescricaoSimilar>? savprodutosimilar { get; set; } = [];
     }
 }

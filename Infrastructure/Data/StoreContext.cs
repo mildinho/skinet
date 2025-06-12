@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Core.Entities;
+﻿using Core.Entities;
 using Infrastructure.Config;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +11,8 @@ namespace Infrastructure.Data
         public DbSet<SAVProduto> SAVProduto { get; set; }
         public DbSet<SAVProdutoDetalhe> SAVProdutoDetalhe { get; set; }
         public DbSet<SAVProdutoImagem> SAVProdutoImagem { get; set; }
+        public DbSet<SAVDescricao> SAVDescricao { get; set; }
+        public DbSet<SAVDescricaoSimilar> SAVDescricaoSimilar { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -28,6 +25,8 @@ namespace Infrastructure.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVProdutoConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVProdutoDetalheConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVProdutoImagemConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVDescricaoConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVDescricaoSimilarConfiguration).Assembly);
         }
     }
 

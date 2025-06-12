@@ -8,25 +8,41 @@ namespace Core.Specifications
 {
     public class SAVProdutoSpecParams : PagingParams
     {
-        private List<string> _fornecedores = new List<string>();
-        private string? _search;
+        private List<string> _fabricantes = new List<string>();
+        private List<int> _id = new List<int>();
+        
+        private string _buscar = string.Empty;
+        private bool _comSaldo = true;
 
 
-
-        public List<string> Fornecedores
+        public List<int> Id
         {
-            get => _fornecedores;
-            set => _fornecedores = value.SelectMany(b => b.Split(',',
+            get => _id;
+            set => _id = value.Select(b => b).ToList();
+        }
+       
+
+        public List<string> Fabricantes
+        {
+            get => _fabricantes;
+            set => _fabricantes = value.SelectMany(b => b.Split(',',
                 StringSplitOptions.RemoveEmptyEntries)).ToList();
         }
 
         public string? Sort { get; set; }
 
-        public string Search
+        public string Buscar
         {
-            get => _search ?? "";
-            set => _search = value.ToLower();
+            get => _buscar;
+            set => _buscar = value.ToUpper();
         }
 
+        public bool SomenteComSaldoDisponivel
+        {
+            get => _comSaldo;
+            set => _comSaldo = value;
+        }
+       
+      
     }
 }

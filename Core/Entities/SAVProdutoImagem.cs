@@ -8,7 +8,8 @@ namespace Core.Entities
         [ForeignKey("SAVProduto")]
         public int savprodutoid { get; set; }
 
-        public string? imagem { get; set; } = string.Empty;
+        public string? filename { get; set; } = string.Empty;
+        public string? url { get; set; } = string.Empty;
        
     }
 }

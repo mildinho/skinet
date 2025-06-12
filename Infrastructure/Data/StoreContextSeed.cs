@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using Core.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
@@ -15,6 +8,8 @@ namespace Infrastructure.Data
 
         public static async Task SeedDataAsync(StoreContext context)
         {
+
+            // CADASTRANDO PRODUTO
             if (!context.Products.Any())
             {
 
@@ -27,6 +22,9 @@ namespace Infrastructure.Data
                 await context.SaveChangesAsync();
             }
 
+
+
+            // CADASTRANDO PRODUTO
             if (!context.SAVProduto.Any())
             {
 
@@ -39,44 +37,119 @@ namespace Infrastructure.Data
                 await context.SaveChangesAsync();
             }
 
-            if (!context.SAVProdutoDetalhe.Any())
+
+
+
+            // CADASTRANDO DESCRICAO UNICA DO PRODUTO
+            if (!context.SAVDescricao.Any())
             {
-                var product_base = context.SAVProduto.Select(p => p.Id).ToList();
+                var product_descricao = context.SAVProduto.Where(x => x.idparceiro != "0000000400").
+                    Select(p => p.descricao).Distinct().ToList();
 
-                var produtcs = new List<SAVProdutoDetalhe>();
+                var descricao = new List<SAVDescricao>();
 
-                foreach (var product in product_base)
+                foreach (var desc in product_descricao)
                 {
-                    produtcs.Add(new SAVProdutoDetalhe
+                    descricao.Add(new SAVDescricao
                     {
-                        savempresaid = 1, // Assuming a default value for idempresa
-                        savprodutoid = product,
-                        base_venda = product,
-                        base_oferta = product * 0.9m ,
-                        base_atacado = product * 0.7m,
-                        saldo_disponivel = product / 3.14m
+                        descricao = desc
+
                     });
                 }
 
-                if (produtcs == null) return;
-                context.SAVProdutoDetalhe.AddRange(produtcs);
+                if (descricao == null) return;
+
+                context.SAVDescricao.AddRange(descricao);
                 await context.SaveChangesAsync();
             }
 
 
 
-            //if (context.SAVProduto.Any())
-            //{
 
-            //    // Correcting the property name to match the type definition
-            //    var xx = context.SAVProduto
-            //        .Include(p => p.savprodutodetalhe) // Ensure the property name matches the type definition
-            //        .Where(p => p.descr.Contains("LANT"))
-            //        .ToList();
 
-            //    Console.Write(xx);
+            // CADASTRANDO IMAGENS
+            if (!context.SAVProdutoImagem.Any())
+            {
+                var product_base = context.SAVProduto.Select(p => new { p.Id, p.referencia }).ToList();
+                var images = new List<SAVProdutoImagem>();
 
-            //}
+                foreach (var product in product_base)
+                {
+
+
+                    images.Add(new SAVProdutoImagem
+                    {
+                        savprodutoid = product.Id,
+                        filename = product.referencia,
+                        url = "https://www.furacao.com.br/imagensfuracao/produtosfw/"
+                    });
+                }
+
+                if (images == null) return;
+
+
+                context.SAVProdutoImagem.AddRange(images);
+                await context.SaveChangesAsync();
+            }
+
+
+            // CADASTRANDO DESCRICAO SIMILAR
+            if (!context.SAVDescricaoSimilar.Any())
+            {
+                var product_base = context.SAVProduto.Where( X=> X.idparceiro != "0000000400").
+                    Select(p => new { p.Id, p.descricao }).ToList();
+                var descricao_base = context.SAVDescricao.ToList();
+
+
+                var descricao_similar = new List<SAVDescricaoSimilar>();
+                foreach (var product in product_base)
+                {
+                    descricao_similar.Add(new SAVDescricaoSimilar
+                    {
+                        savprodutoid = product.Id,
+                        savdescricaoid = descricao_base.FirstOrDefault(d => d.descricao == product.descricao)?.Id ?? 0
+                    });
+                }
+                if (descricao_similar == null) return;
+                context.SAVDescricaoSimilar.AddRange(descricao_similar);
+                await context.SaveChangesAsync();
+            }
+
+
+
+
+
+            // CADASTRANDO DETALHES DOS PRODUTOS
+            if (!context.SAVProdutoDetalhe.Any())
+            {
+                var product_base = context.SAVProduto.Select(p => new { p.Id, p.referencia }).ToList();
+
+                var details = new List<SAVProdutoDetalhe>();
+      
+                foreach (var product in product_base)
+                {
+                    details.Add(new SAVProdutoDetalhe
+                    {
+                        savempresaid = 1, // Assuming a default value for idempresa
+                        savprodutoid = product.Id,
+                        base_venda = product.Id,
+                        base_oferta = product.Id * 0.9m,
+                        base_atacado = product.Id * 0.7m,
+                        saldo_disponivel = product.Id / 3.14m
+                    });
+
+
+                }
+
+                if (details == null) return;
+
+                //detalhes
+                context.SAVProdutoDetalhe.AddRange(details);
+
+                await context.SaveChangesAsync();
+            }
+
+
 
 
         }
