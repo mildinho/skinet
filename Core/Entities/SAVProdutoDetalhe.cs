@@ -15,12 +15,17 @@ namespace Core.Entities
         [ForeignKey("SAVProduto")]
         public int savprodutoid { get; set; }
 
+        public string? unidade_medida { get; set; } = string.Empty;
 
+        public string? ncm { get; set; } = string.Empty;
 
-        public decimal base_venda { get; set; } = 0;
-        public decimal base_oferta { get; set; } = 0;
-        public decimal base_atacado { get; set; } = 0;
-        public decimal saldo_disponivel { get; set; } = 0;
+        public decimal? multiplo_venda { get; set; } = 0; 
+
+        public decimal? base_venda { get; set; } = 0;
+        public decimal? base_oferta { get; set; } = 0;
+        public decimal? base_atacado { get; set; } = 0;
+        public decimal? saldo_disponivel { get; set; } = 0;
+
 
 
 

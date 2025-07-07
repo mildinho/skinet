@@ -18,27 +18,43 @@ namespace Infrastructure.Data
 
             var query = storeContext.SAVProduto.AsQueryable();
 
+            // FILTRO PRINCIPAL DO PRODUTO
             query = query.Where(
-                p => p.referencia == pesquisar || p.numero_fabrica == pesquisar ||
+                p => p.referencia == pesquisar || p.numero_fabrica.StartsWith(pesquisar) ||
                      p.codigobarra01 == pesquisar || p.codigobarra02 == pesquisar ||
                      p.numero_original == pesquisar || p.descricao.Contains(pesquisar)
             );
-
 
             idProdutos = await query.Select(x => x.Id).ToListAsync();
 
 
 
 
+            // FILTRO POR SIMILARES - DESCRIÇÃO
             var queryDescricaoSimilar = storeContext.SAVDescricaoSimilar.AsQueryable();
 
             queryDescricaoSimilar = queryDescricaoSimilar.Where(
                 x => idProdutos.Contains(x.savprodutoid)
             );
 
-            idSimilar = await queryDescricaoSimilar.Select(x => x.Id).ToListAsync();
+            idSimilar = await queryDescricaoSimilar.Select(x => x.savdescricaoid).ToListAsync();
 
+            queryDescricaoSimilar = queryDescricaoSimilar.Where(
+                x => idSimilar.Contains(x.savdescricaoid)
+            );
+
+            idSimilar = await queryDescricaoSimilar.Select(x => x.savprodutoid).ToListAsync();
+
+
+
+
+
+            // JUNTANDO OS RESULTADOS
             idProdutos.AddRange(idSimilar);
+
+
+            // CRIANDO A LISTA FINAL
+            idProdutos = idProdutos.Distinct().ToList();
 
             return idProdutos;
         }

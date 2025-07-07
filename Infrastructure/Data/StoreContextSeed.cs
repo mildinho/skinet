@@ -24,6 +24,35 @@ namespace Infrastructure.Data
 
 
 
+
+            // CADASTRANDO DA EMPRESA
+            if (!context.SAVEmpresa.Any())
+            {
+                List<SAVEmpresa> empresaList = new();
+
+                empresaList.Add(new SAVEmpresa
+                {
+                    Id = 1,
+                    razao_social = "Furacao Comercio de Pecas e Acessorios Ltda",
+                    fantasia = "FW - CAMPINAS",
+                    cnpj = "08.897.417/0002-91",
+                    inscricao_estadual = "1234567890"
+                });
+
+                empresaList.Add(new SAVEmpresa
+                {
+                    Id = 2,
+                    razao_social = "Furacao Comercio de Pecas e Acessorios Ltda",
+                    fantasia = "FW - RS",
+                    cnpj = "08.897.417/0017-78",
+                    inscricao_estadual = "1234567890"
+                });
+
+                context.SAVEmpresa.AddRange(empresaList);
+                await context.SaveChangesAsync();
+            }
+
+
             // CADASTRANDO PRODUTO
             if (!context.SAVProduto.Any())
             {
@@ -96,7 +125,7 @@ namespace Infrastructure.Data
             // CADASTRANDO DESCRICAO SIMILAR
             if (!context.SAVDescricaoSimilar.Any())
             {
-                var product_base = context.SAVProduto.Where( X=> X.idparceiro != "0000000400").
+                var product_base = context.SAVProduto.Where(X => X.idparceiro != "0000000400").
                     Select(p => new { p.Id, p.descricao }).ToList();
                 var descricao_base = context.SAVDescricao.ToList();
 
@@ -125,20 +154,25 @@ namespace Infrastructure.Data
                 var product_base = context.SAVProduto.Select(p => new { p.Id, p.referencia }).ToList();
 
                 var details = new List<SAVProdutoDetalhe>();
-      
-                foreach (var product in product_base)
+
+                var empresas = context.SAVEmpresa.ToList();
+
+                foreach (var emp in empresas)
                 {
-                    details.Add(new SAVProdutoDetalhe
+                    foreach (var product in product_base)
                     {
-                        savempresaid = 1, // Assuming a default value for idempresa
-                        savprodutoid = product.Id,
-                        base_venda = product.Id,
-                        base_oferta = product.Id * 0.9m,
-                        base_atacado = product.Id * 0.7m,
-                        saldo_disponivel = product.Id / 3.14m
-                    });
+                        details.Add(new SAVProdutoDetalhe
+                        {
+                            savempresaid = emp.Id, // Assuming a default value for idempresa
+                            savprodutoid = product.Id,
+                            base_venda = product.Id,
+                            base_oferta = product.Id * 0.9m,
+                            base_atacado = product.Id * 0.7m,
+                            saldo_disponivel = product.Id / 3.14m
+                        });
 
 
+                    }
                 }
 
                 if (details == null) return;

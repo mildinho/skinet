@@ -18,6 +18,7 @@ namespace Infrastructure.Config
             builder.Property(x => x.base_atacado).HasColumnType("decimal(18,4)");
             builder.Property(x => x.base_oferta).HasColumnType("decimal(18,4)");
             builder.Property(x => x.saldo_disponivel).HasColumnType("decimal(18,4)");
+            builder.Property(x => x.multiplo_venda).HasColumnType("decimal(18,4)");
 
 
             builder.HasIndex(x =>  new { x.savempresaid, x.savprodutoid});
