@@ -12,7 +12,7 @@ namespace Infrastructure.Data
         public DbSet<SAVProdutoDetalhe> SAVProdutoDetalhe { get; set; }
         public DbSet<SAVProdutoImagem> SAVProdutoImagem { get; set; }
         public DbSet<SAVDescricao> SAVDescricao { get; set; }
-        public DbSet<SAVDescricaoSimilar> SAVDescricaoSimilar { get; set; }
+        public DbSet<SAVEmpresa> SAVEmpresa { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
