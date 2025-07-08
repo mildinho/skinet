@@ -19,6 +19,8 @@ namespace Infrastructure.Data
         public DbSet<SAVDescricao> SAVDescricao { get; set; }
         public DbSet<SAVDescricaoSimilar> SAVDescricaoSimilar { get; set; }
 
+        public DbSet<SAVEmpresa> SAVEmpresa { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

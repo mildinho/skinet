@@ -32,7 +32,7 @@ namespace Infrastructure.Data
 
                 empresaList.Add(new SAVEmpresa
                 {
-                    Id = 1,
+           
                     razao_social = "Furacao Comercio de Pecas e Acessorios Ltda",
                     fantasia = "FW - CAMPINAS",
                     cnpj = "08.897.417/0002-91",
@@ -41,7 +41,7 @@ namespace Infrastructure.Data
 
                 empresaList.Add(new SAVEmpresa
                 {
-                    Id = 2,
+                
                     razao_social = "Furacao Comercio de Pecas e Acessorios Ltda",
                     fantasia = "FW - RS",
                     cnpj = "08.897.417/0017-78",

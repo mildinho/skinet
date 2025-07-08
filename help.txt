@@ -4,4 +4,7 @@ https://github.com/TryCatchLearn/skinet-2024/tree/main
 
 Para subir o docker na mao
  docker compose up
-
+ {
+   "email": "fer@uol.com.br",
+  "password": "@#$789AAbb__"
+  }
