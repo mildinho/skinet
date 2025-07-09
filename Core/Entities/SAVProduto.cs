@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,8 +9,9 @@ namespace Core.Entities
 {
     public class SAVProduto : BaseEntity
     {
-        public string? idparceiro { get; set; } = string.Empty;
-        public string? referencia { get; set; } = string.Empty;
+        public int savfabricanteid { get; set; }
+
+        public string referencia { get; set; } = string.Empty;
         public string? codigobarra01 { get; set; } = string.Empty;
         public string? codigobarra02 { get; set; } = string.Empty;
         public string? descricao { get; set; } = string.Empty;

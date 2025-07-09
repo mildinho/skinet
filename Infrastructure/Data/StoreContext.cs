@@ -12,6 +12,7 @@ namespace Infrastructure.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Address> Addresses { get; set; }
 
+        public DbSet<SAVFabricante> SAVFabricante { get; set; }
 
         public DbSet<SAVProduto> SAVProduto { get; set; }
         public DbSet<SAVProdutoDetalhe> SAVProdutoDetalhe { get; set; }
@@ -20,6 +21,7 @@ namespace Infrastructure.Data
         public DbSet<SAVDescricaoSimilar> SAVDescricaoSimilar { get; set; }
 
         public DbSet<SAVEmpresa> SAVEmpresa { get; set; }
+        public DbSet<SAVEmpresaVinculo> SAVEmpresaVinculo { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -29,11 +31,15 @@ namespace Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assembly);
+
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVFabricanteConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVProdutoConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVProdutoDetalheConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVProdutoImagemConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVDescricaoConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVDescricaoSimilarConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(SAVEmpresaVinculoConfiguration).Assembly);
         }
     }
 

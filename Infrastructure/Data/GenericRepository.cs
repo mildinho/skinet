@@ -27,7 +27,7 @@ namespace Infrastructure.Data
 
         public bool Exists(int id)
         {
-            return context.Set<T>().Any(x => x.Id == id);
+            return context.Set<T>().Any(x => x.id == id);
         }
 
         public async Task<T?> GetByIdAsync(int id)

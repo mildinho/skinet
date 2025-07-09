@@ -25,6 +25,21 @@ namespace Infrastructure.Data
 
 
 
+
+            // CADASTRANDO FABRICANTE
+            if (!context.SAVFabricante.Any())
+            {
+
+                var objeto = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/fabricante_sav.json");
+
+                var objetoLista = JsonSerializer.Deserialize<List<SAVFabricante>>(objeto);
+                if (objetoLista == null) return;
+
+                context.SAVFabricante.AddRange(objetoLista);
+                await context.SaveChangesAsync();
+            }
+
+
             // CADASTRANDO DA EMPRESA
             if (!context.SAVEmpresa.Any())
             {
@@ -32,8 +47,15 @@ namespace Infrastructure.Data
 
                 empresaList.Add(new SAVEmpresa
                 {
-                    Id = 1,
-                    razao_social = "Furacao Comercio de Pecas e Acessorios Ltda",
+                    razao_social = "FW DISTRIBUIDORA LTDA",
+                    fantasia = "FW - SOCORRO",
+                    cnpj_cpf = "08897417000100",
+                    uf = "SP",
+                });
+
+                empresaList.Add(new SAVEmpresa
+                {
+                    razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - CAMPINAS",
                     cnpj_cpf = "08897417000291",
                     uf = "SP",
@@ -286,11 +308,10 @@ namespace Infrastructure.Data
 
                 empresaList.Add(new SAVEmpresa
                 {
-                    Id = 2,
-                    razao_social = "Furacao Comercio de Pecas e Acessorios Ltda",
-                    fantasia = "FW - RS",
-                    cnpj = "08.897.417/0017-78",
-                    inscricao_estadual = "1234567890"
+                    razao_social = "FW DISTRIBUIDORA LTDA",
+                    fantasia = "FW - SOROCABA",
+                    cnpj_cpf = "08897417003630",
+                    uf = "SP",
                 });
 
 
@@ -318,8 +339,7 @@ namespace Infrastructure.Data
             // CADASTRANDO DESCRICAO UNICA DO PRODUTO
             if (!context.SAVDescricao.Any())
             {
-                var product_descricao = context.SAVProduto.Where(x => x.idparceiro != "0000000400").
-                    Select(p => p.descricao).Distinct().ToList();
+                var product_descricao = context.SAVProduto.Select(p => p.descricao).Distinct().ToList();
 
                 var descricao = new List<SAVDescricao>();
 
@@ -345,7 +365,7 @@ namespace Infrastructure.Data
             // CADASTRANDO IMAGENS
             if (!context.SAVProdutoImagem.Any())
             {
-                var product_base = context.SAVProduto.Select(p => new { p.Id, p.referencia }).ToList();
+                var product_base = context.SAVProduto.Select(p => new { p.id, p.referencia }).ToList();
                 var images = new List<SAVProdutoImagem>();
 
                 foreach (var product in product_base)
@@ -354,7 +374,7 @@ namespace Infrastructure.Data
 
                     images.Add(new SAVProdutoImagem
                     {
-                        savprodutoid = product.Id,
+                        savprodutoid = product.id,
                         filename = product.referencia,
                         url = "https://www.furacao.com.br/imagensfuracao/produtosfw/"
                     });
@@ -371,8 +391,7 @@ namespace Infrastructure.Data
             // CADASTRANDO DESCRICAO SIMILAR
             if (!context.SAVDescricaoSimilar.Any())
             {
-                var product_base = context.SAVProduto.Where(X => X.idparceiro != "0000000400").
-                    Select(p => new { p.Id, p.descricao }).ToList();
+                var product_base = context.SAVProduto.Select(p => new { p.id, p.descricao }).ToList();
                 var descricao_base = context.SAVDescricao.ToList();
 
 
@@ -381,8 +400,8 @@ namespace Infrastructure.Data
                 {
                     descricao_similar.Add(new SAVDescricaoSimilar
                     {
-                        savprodutoid = product.Id,
-                        savdescricaoid = descricao_base.FirstOrDefault(d => d.descricao == product.descricao)?.Id ?? 0
+                        savprodutoid = product.id,
+                        savdescricaoid = descricao_base.FirstOrDefault(d => d.descricao == product.descricao)?.id ?? 0
                     });
                 }
                 if (descricao_similar == null) return;
@@ -391,43 +410,6 @@ namespace Infrastructure.Data
             }
 
 
-
-
-
-            // CADASTRANDO DETALHES DOS PRODUTOS
-            if (!context.SAVProdutoDetalhe.Any())
-            {
-                var product_base = context.SAVProduto.Select(p => new { p.Id, p.referencia }).ToList();
-
-                var details = new List<SAVProdutoDetalhe>();
-
-                var empresas = context.SAVEmpresa.ToList();
-
-                foreach (var emp in empresas)
-                {
-                    foreach (var product in product_base)
-                    {
-                        details.Add(new SAVProdutoDetalhe
-                        {
-                            savempresaid = emp.Id, // Assuming a default value for idempresa
-                            savprodutoid = product.Id,
-                            base_venda = product.Id,
-                            base_oferta = product.Id * 0.9m,
-                            base_atacado = product.Id * 0.7m,
-                            saldo_disponivel = product.Id / 3.14m
-                        });
-
-
-                    }
-                }
-
-                if (details == null) return;
-
-                //detalhes
-                context.SAVProdutoDetalhe.AddRange(details);
-
-                await context.SaveChangesAsync();
-            }
 
 
 

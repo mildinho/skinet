@@ -12,8 +12,8 @@ namespace Core.Specifications
         public SAVProdutoSpecification(SAVProdutoSpecParams specParams) : base(
         x =>
 
-            (specParams.Id.Count == 0 || specParams.Id.Contains(x.Id)) &&
-            (specParams.Fabricantes.Count == 0 || specParams.Fabricantes.Contains(x.idparceiro)) &&
+            (specParams.Id.Count == 0 || specParams.Id.Contains(x.id)) &&
+           // (specParams.Fabricantes.Count == 0 || specParams.Fabricantes.Contains(x.id)) &&
             (specParams.SomenteComSaldoDisponivel == false || x.savprodutodetalhe != null && x.savprodutodetalhe.Any(d => d.saldo_disponivel > 0))
 
         )
@@ -28,10 +28,10 @@ namespace Core.Specifications
             switch (specParams.Sort)
             {
                 case "fabricanteAsc":
-                    AddOrderBy(p => p.idparceiro);
+                    AddOrderBy(p => p.savfabricanteid);
                     break;
                 case "fabricanteDesc":
-                    AddOrderByDescending(p => p.idparceiro);
+                    AddOrderByDescending(p => p.savfabricanteid);
                     break;
                 default:
                     AddOrderBy(p => p.referencia);

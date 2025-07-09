@@ -74,7 +74,7 @@ namespace Infrastructure.Data
 
         public bool ProductExists(int id)
         {
-            return storeContext.Products.Any(p => p.Id == id);
+            return storeContext.Products.Any(p => p.id == id);
         }
 
         public async Task<bool> SaveChangesAsync()

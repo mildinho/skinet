@@ -25,7 +25,7 @@ namespace Infrastructure.Data
                      p.numero_original == pesquisar || p.descricao.Contains(pesquisar)
             );
 
-            idProdutos = await query.Select(x => x.Id).ToListAsync();
+            idProdutos = await query.Select(x => x.id).ToListAsync();
 
 
 

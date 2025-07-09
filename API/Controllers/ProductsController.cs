@@ -39,7 +39,7 @@ namespace API.Controllers
 
             if (await productRepository.SaveChangesAsync())
             {
-                return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
+                return CreatedAtAction(nameof(GetProduct), new { id = product.id }, product);
             }
             else
             {
@@ -74,7 +74,7 @@ namespace API.Controllers
         {
 
             if (product == null) return NotFound();
-            if (product.Id != id) return BadRequest();
+            if (product.id != id) return BadRequest();
             if (!ProductExist(id)) return NotFound();
 
 

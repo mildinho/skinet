@@ -9,10 +9,8 @@ namespace Core.Entities
 {
     public class SAVProdutoDetalhe : BaseEntity
     {
-        [ForeignKey("SAVEmpresa")]
         public int savempresaid { get; set; }
 
-        [ForeignKey("SAVProduto")]
         public int savprodutoid { get; set; }
 
         public string? unidade_medida { get; set; } = string.Empty;
@@ -24,10 +22,10 @@ namespace Core.Entities
         public decimal? base_venda { get; set; } = 0;
         public decimal? base_oferta { get; set; } = 0;
         public decimal? base_atacado { get; set; } = 0;
+        public decimal? base_custo { get; set; } = 0;
+        public decimal? base_medio { get; set; } = 0;
+
         public decimal? saldo_disponivel { get; set; } = 0;
-
-
-
 
     }
 }
