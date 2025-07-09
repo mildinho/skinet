@@ -1,4 +1,5 @@
 using API.Middleware;
+using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Services;
@@ -30,6 +31,9 @@ builder.Services.AddSingleton<IConnectionMultiplexer>(x =>
 });
 builder.Services.AddSingleton<ICartService, CartService>();
 
+// esta informação esta no storecontext.cs
+builder.Services.AddAuthorization();
+builder.Services.AddIdentityApiEndpoints<AppUser>().AddEntityFrameworkStores<StoreContext>();
 
 
 
@@ -61,10 +65,14 @@ app.UseCors(policy =>
 {
     policy.AllowAnyHeader()
           .AllowAnyMethod()
+          .AllowCredentials()
           .WithOrigins("https://localhost:4200", "http://localhost:4200");
 });
 
 app.MapControllers();
+
+// Este faz os Endpoints de Identity funcionar
+app.MapGroup("api").MapIdentityApi<AppUser>();
 try
 {
     using var scope = app.Services.CreateScope();

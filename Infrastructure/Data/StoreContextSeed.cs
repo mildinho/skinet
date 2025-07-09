@@ -32,16 +32,8 @@ namespace Infrastructure.Data
 
                 empresaList.Add(new SAVEmpresa
                 {
-                    razao_social = "FW DISTRIBUIDORA LTDA",
-                    fantasia = "FW - SOCORRO",
-                    cnpj_cpf = "08897417000100",
-                    uf = "SP",
-                    
-                });
-
-                empresaList.Add(new SAVEmpresa
-                {
-                    razao_social = "FW DISTRIBUIDORA LTDA",
+                    Id = 1,
+                    razao_social = "Furacao Comercio de Pecas e Acessorios Ltda",
                     fantasia = "FW - CAMPINAS",
                     cnpj_cpf = "08897417000291",
                     uf = "SP",
@@ -294,10 +286,11 @@ namespace Infrastructure.Data
 
                 empresaList.Add(new SAVEmpresa
                 {
-                    razao_social = "FW DISTRIBUIDORA LTDA",
-                    fantasia = "FW - SOROCABA",
-                    cnpj_cpf = "08897417003630",
-                    uf = "SP",
+                    Id = 2,
+                    razao_social = "Furacao Comercio de Pecas e Acessorios Ltda",
+                    fantasia = "FW - RS",
+                    cnpj = "08.897.417/0017-78",
+                    inscricao_estadual = "1234567890"
                 });
 
 
