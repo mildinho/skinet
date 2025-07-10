@@ -8,7 +8,7 @@ namespace Core.Specifications
 {
     public class SAVProdutoSpecParams : PagingParams
     {
-        private List<string> _fabricantes = new List<string>();
+        private List<int> _fabricantes = new List<int>();
         private List<int> _id = new List<int>();
         
         private string _buscar = string.Empty;
@@ -22,11 +22,13 @@ namespace Core.Specifications
         }
        
 
-        public List<string> Fabricantes
+        public List<int> Fabricantes
         {
             get => _fabricantes;
-            set => _fabricantes = value.SelectMany(b => b.Split(',',
-                StringSplitOptions.RemoveEmptyEntries)).ToList();
+            set => _fabricantes = value;
+
+            //set => _fabricantes = value.SelectMany(b => b.Split(',',
+            // StringSplitOptions.RemoveEmptyEntries)).ToList();
         }
 
         public string? Sort { get; set; }

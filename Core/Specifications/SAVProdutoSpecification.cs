@@ -12,9 +12,9 @@ namespace Core.Specifications
         public SAVProdutoSpecification(SAVProdutoSpecParams specParams) : base(
         x =>
 
-            (specParams.Id.Count == 0 || specParams.Id.Contains(x.id)) &&
-           // (specParams.Fabricantes.Count == 0 || specParams.Fabricantes.Contains(x.id)) &&
-            (specParams.SomenteComSaldoDisponivel == false || x.savprodutodetalhe != null && x.savprodutodetalhe.Any(d => d.saldo_disponivel > 0))
+            ( specParams.Id.Contains(x.id)) ||
+            ( specParams.Fabricantes.Contains(x.savfabricanteid))
+           // (specParams.SomenteComSaldoDisponivel == false || x.savprodutodetalhe != null && x.savprodutodetalhe.Any(d => d.saldo_disponivel > 0))
 
         )
         {

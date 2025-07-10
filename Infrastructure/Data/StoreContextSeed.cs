@@ -320,22 +320,7 @@ namespace Infrastructure.Data
             }
 
 
-            // CADASTRANDO PRODUTO
-            if (!context.SAVProduto.Any())
-            {
-
-                var produtcs = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/produto_sav.json");
-
-                var productList = JsonSerializer.Deserialize<List<SAVProduto>>(produtcs);
-                if (productList == null) return;
-
-                context.SAVProduto.AddRange(productList);
-                await context.SaveChangesAsync();
-            }
-
-
-
-
+            
             // CADASTRANDO DESCRICAO UNICA DO PRODUTO
             if (!context.SAVDescricao.Any())
             {

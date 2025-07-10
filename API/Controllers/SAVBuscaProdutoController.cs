@@ -14,11 +14,23 @@ namespace API.Controllers
            [FromQuery] SAVProdutoSpecParams specParams)
         {
             if (specParams == null) return BadRequest("Os Parametros NÃO PODEM Ser Nulo");
-            if (specParams.Buscar.Length < 3)
+
+       
+            if ((specParams.Id == null || specParams.Id.Count <= 0) &&
+               ( string.IsNullOrEmpty(specParams.Buscar)  || specParams.Buscar.Length < 3))
                 return BadRequest("Informe no Minimo 3 Digitos para Buscar");
 
+            if ((specParams.Id == null || specParams.Id.Count == 0) &&
+              string.IsNullOrEmpty(specParams.Buscar))
+                return BadRequest("Informe ao menos um ID de Produto para Buscar");
 
-            List<int> ids = await buscaProduto.BuscaProduto(specParams.Buscar);
+
+            List<int> ids = new List<int>();
+            if ( specParams.Buscar != null && specParams.Buscar.Length >= 3)
+            {
+               ids = await buscaProduto.BuscaProduto(specParams.Buscar);
+            }
+            
 
             foreach (var item in ids)
             {

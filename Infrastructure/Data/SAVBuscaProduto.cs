@@ -20,7 +20,7 @@ namespace Infrastructure.Data
 
             // FILTRO PRINCIPAL DO PRODUTO
             query = query.Where(
-                p => p.referencia == pesquisar || p.numero_fabrica.StartsWith(pesquisar) ||
+                p => p.referencia.StartsWith(pesquisar) || p.numero_fabrica.StartsWith(pesquisar) ||
                      p.codigobarra01 == pesquisar || p.codigobarra02 == pesquisar ||
                      p.numero_original == pesquisar || p.descricao.Contains(pesquisar)
             );
