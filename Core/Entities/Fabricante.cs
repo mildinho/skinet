@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class SAVFabricante : BaseEntity
+    public class Fabricante : BaseEntity
     {
         public string codigo_interno { get; set; } = string.Empty;
         public string? razao_social { get; set; } = string.Empty;

@@ -11,9 +11,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Config
 {
-    public class SAVProdutoConfiguration : IEntityTypeConfiguration<SAVProduto>
+    public class ProdutoConfiguration : IEntityTypeConfiguration<Produto>
     {
-        public void Configure(EntityTypeBuilder<SAVProduto> builder)
+        public void Configure(EntityTypeBuilder<Produto> builder)
         {
             builder.HasIndex(x => x.referencia);
             builder.HasIndex(x => x.savfabricanteid);
@@ -27,7 +27,7 @@ namespace Infrastructure.Config
             builder.HasIndex(x => new { x.savfabricanteid, x.id }).IsUnique();
 
 
-            builder.HasOne<SAVFabricante>() // SAVProdutoDetalhe tem UMA Empresa
+            builder.HasOne<Fabricante>() // SAVProdutoDetalhe tem UMA Empresa
                    .WithMany()              // Empresa pode ter MUITOS SAVProdutoDetalhe (se não houver coleção em SAVEMPRESA)
                    .HasForeignKey(pd => pd.savfabricanteid) // A chave estrangeira em SAVProdutoDetalhe
                    .OnDelete(DeleteBehavior.Restrict);   // Comportamento ao deletar a empresa (Restringir é seguro)

@@ -4,9 +4,23 @@ using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration) // Permite configurar via appsettings.json
+    .Enrich.FromLogContext() // Adiciona propriedades do contexto do log
+    .WriteTo.Console()
+    .WriteTo.File("logs/skinet.txt", rollingInterval: RollingInterval.Hour) // Logs diários
+                                                                           // Adicione outros sinks aqui, por exemplo:
+                                                                           // .WriteTo.Seq("http://localhost:5341") // Se você estiver usando o Seq
+    .CreateLogger();
+
+// **Passo 2: Usar o Serilog como provedor de log para o .NET**
+builder.Host.UseSerilog();
+
 
 // Add services to the container.
 
@@ -90,4 +104,8 @@ catch (Exception ex)
     Console.WriteLine($"An error occurred while seeding the database: {ex.Message}");
     throw;
 }
+
+// **Passo 3: Garantir que o logger seja liberado ao sair da aplicação**
+// Isso é importante para garantir que todos os logs pendentes sejam gravados
+app.Lifetime.ApplicationStopped.Register(Log.CloseAndFlush);
 app.Run();

@@ -7,21 +7,25 @@ using Core.Entities;
 
 namespace Core.Specifications
 {
-    public class SAVProdutoSpecification : BaseSpecification<SAVProduto>
+    public class SAVProdutoSpecification : BaseSpecification<Produto>
     {
         public SAVProdutoSpecification(SAVProdutoSpecParams specParams) : base(
         x =>
 
             ( specParams.Id.Contains(x.id)) ||
-            ( specParams.Fabricantes.Contains(x.savfabricanteid))
-           // (specParams.SomenteComSaldoDisponivel == false || x.savprodutodetalhe != null && x.savprodutodetalhe.Any(d => d.saldo_disponivel > 0))
-
+            ( specParams.FabricantesId.Contains(x.savfabricanteid))
         )
         {
-
+            //Incluindo os Similares
             Includes.Add(x => x.savprodutosimilar);
-            Includes.Add(x => x.savprodutodetalhe);
+
+            //Incluindo as Imagens
             Includes.Add(x => x.imagens);
+
+            // Incluindo os Detalhes do Produto
+            Includes.Add(x => x.savprodutodetalhe.
+                Where(d => specParams.IDEmpresaParceira.Contains(d.empresaid)));
+          
 
             ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
 

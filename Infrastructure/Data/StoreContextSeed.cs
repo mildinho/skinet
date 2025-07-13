@@ -27,25 +27,25 @@ namespace Infrastructure.Data
 
 
             // CADASTRANDO FABRICANTE
-            if (!context.SAVFabricante.Any())
+            if (!context.Fabricante.Any())
             {
 
                 var objeto = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/fabricante_sav.json");
 
-                var objetoLista = JsonSerializer.Deserialize<List<SAVFabricante>>(objeto);
+                var objetoLista = JsonSerializer.Deserialize<List<Fabricante>>(objeto);
                 if (objetoLista == null) return;
 
-                context.SAVFabricante.AddRange(objetoLista);
+                context.Fabricante.AddRange(objetoLista);
                 await context.SaveChangesAsync();
             }
 
 
             // CADASTRANDO DA EMPRESA
-            if (!context.SAVEmpresa.Any())
+            if (!context.Empresa.Any())
             {
-                List<SAVEmpresa> empresaList =[];
+                List<Empresa> empresaList =[];
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - SOCORRO",
@@ -53,7 +53,7 @@ namespace Infrastructure.Data
                     uf = "SP",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - CAMPINAS",
@@ -61,7 +61,7 @@ namespace Infrastructure.Data
                     uf = "SP",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - CAMPO GRANDE",
@@ -70,7 +70,7 @@ namespace Infrastructure.Data
                 });
 
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - RECIFE",
@@ -78,7 +78,7 @@ namespace Infrastructure.Data
                     uf = "PE",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - RIO DE JANEIRO",
@@ -86,7 +86,7 @@ namespace Infrastructure.Data
                     uf = "RJ",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - PORTO ALEGRE",
@@ -95,7 +95,7 @@ namespace Infrastructure.Data
                 });
 
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - ITAJAI",
@@ -104,7 +104,7 @@ namespace Infrastructure.Data
                 });
 
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - GOIANIA",
@@ -113,7 +113,7 @@ namespace Infrastructure.Data
                 });
 
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - CURITIBA",
@@ -121,7 +121,7 @@ namespace Infrastructure.Data
                     uf = "PR",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - SALVADOR",
@@ -130,7 +130,7 @@ namespace Infrastructure.Data
                 });
 
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - CUIABA",
@@ -138,7 +138,7 @@ namespace Infrastructure.Data
                     uf = "MT",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - VITORIA",
@@ -147,7 +147,7 @@ namespace Infrastructure.Data
                 });
 
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - FORTALEZA",
@@ -156,7 +156,7 @@ namespace Infrastructure.Data
                 });
 
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - BELEM",
@@ -164,7 +164,7 @@ namespace Infrastructure.Data
                     uf = "PA",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - MANAUS",
@@ -173,7 +173,7 @@ namespace Infrastructure.Data
                 });
 
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - BELO HORIZONTE",
@@ -182,7 +182,7 @@ namespace Infrastructure.Data
                 });
 
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - UBERLANDIA",
@@ -191,7 +191,7 @@ namespace Infrastructure.Data
                 });
 
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - SANTO ANDRE",
@@ -199,7 +199,7 @@ namespace Infrastructure.Data
                     uf = "SP",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - BAURU",
@@ -207,7 +207,7 @@ namespace Infrastructure.Data
                     uf = "SP",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - NOVO MUNDO",
@@ -215,7 +215,7 @@ namespace Infrastructure.Data
                     uf = "SP",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - OSASCO",
@@ -223,7 +223,7 @@ namespace Infrastructure.Data
                     uf = "SP",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - RIBEIRAO PRETO",
@@ -231,7 +231,7 @@ namespace Infrastructure.Data
                     uf = "SP",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - MARINGA",
@@ -239,7 +239,7 @@ namespace Infrastructure.Data
                     uf = "PR",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - SAO JOSE RIO PRETO",
@@ -247,7 +247,7 @@ namespace Infrastructure.Data
                     uf = "SP",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - SAO JOSE DOS CAMPOS",
@@ -255,7 +255,7 @@ namespace Infrastructure.Data
                     uf = "SP",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - SAO LUIS",
@@ -263,7 +263,7 @@ namespace Infrastructure.Data
                     uf = "MA",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - CAMBUCI",
@@ -271,7 +271,7 @@ namespace Infrastructure.Data
                     uf = "SP",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - PRESIDENTE PRUDENTE",
@@ -280,7 +280,7 @@ namespace Infrastructure.Data
                 });
 
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - NATAL",
@@ -289,7 +289,7 @@ namespace Infrastructure.Data
                 });
 
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - VITORIA DA CONQUISTA",
@@ -298,7 +298,7 @@ namespace Infrastructure.Data
                 });
 
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - PIRACICABA",
@@ -306,7 +306,7 @@ namespace Infrastructure.Data
                     uf = "SP",
                 });
 
-                empresaList.Add(new SAVEmpresa
+                empresaList.Add(new Empresa
                 {
                     razao_social = "FW DISTRIBUIDORA LTDA",
                     fantasia = "FW - SOROCABA",
@@ -315,22 +315,22 @@ namespace Infrastructure.Data
                 });
 
 
-                context.SAVEmpresa.AddRange(empresaList);
+                context.Empresa.AddRange(empresaList);
                 await context.SaveChangesAsync();
             }
 
 
             
             // CADASTRANDO DESCRICAO UNICA DO PRODUTO
-            if (!context.SAVDescricao.Any())
+            if (!context.Descricao.Any())
             {
-                var product_descricao = context.SAVProduto.Select(p => p.descricao).Distinct().ToList();
+                var product_descricao = context.Produto.Select(p => p.descricao).Distinct().ToList();
 
-                var descricao = new List<SAVDescricao>();
+                var descricao = new List<Descricao>();
 
                 foreach (var desc in product_descricao)
                 {
-                    descricao.Add(new SAVDescricao
+                    descricao.Add(new Descricao
                     {
                         descricao = desc
 
@@ -339,7 +339,7 @@ namespace Infrastructure.Data
 
                 if (descricao == null) return;
 
-                context.SAVDescricao.AddRange(descricao);
+                context.Descricao.AddRange(descricao);
                 await context.SaveChangesAsync();
             }
 
@@ -348,16 +348,16 @@ namespace Infrastructure.Data
 
 
             // CADASTRANDO IMAGENS
-            if (!context.SAVProdutoImagem.Any())
+            if (!context.ProdutoImagem.Any())
             {
-                var product_base = context.SAVProduto.Select(p => new { p.id, p.referencia }).ToList();
-                var images = new List<SAVProdutoImagem>();
+                var product_base = context.Produto.Select(p => new { p.id, p.referencia }).ToList();
+                var images = new List<ProdutoImagem>();
 
                 foreach (var product in product_base)
                 {
 
 
-                    images.Add(new SAVProdutoImagem
+                    images.Add(new ProdutoImagem
                     {
                         savprodutoid = product.id,
                         filename = product.referencia,
@@ -368,31 +368,10 @@ namespace Infrastructure.Data
                 if (images == null) return;
 
 
-                context.SAVProdutoImagem.AddRange(images);
+                context.ProdutoImagem.AddRange(images);
                 await context.SaveChangesAsync();
             }
 
-
-            // CADASTRANDO DESCRICAO SIMILAR
-            if (!context.SAVDescricaoSimilar.Any())
-            {
-                var product_base = context.SAVProduto.Select(p => new { p.id, p.descricao }).ToList();
-                var descricao_base = context.SAVDescricao.ToList();
-
-
-                var descricao_similar = new List<SAVDescricaoSimilar>();
-                foreach (var product in product_base)
-                {
-                    descricao_similar.Add(new SAVDescricaoSimilar
-                    {
-                        savprodutoid = product.id,
-                        savdescricaoid = descricao_base.FirstOrDefault(d => d.descricao == product.descricao)?.id ?? 0
-                    });
-                }
-                if (descricao_similar == null) return;
-                context.SAVDescricaoSimilar.AddRange(descricao_similar);
-                await context.SaveChangesAsync();
-            }
 
 
 

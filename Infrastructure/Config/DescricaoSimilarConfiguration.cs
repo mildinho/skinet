@@ -10,13 +10,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Config
 {
-    public class SAVDescricaoConfiguration : IEntityTypeConfiguration<SAVDescricao>
+    public class DescricaoSimilarConfiguration : IEntityTypeConfiguration<DescricaoSimilar>
     {
-        public void Configure(EntityTypeBuilder<SAVDescricao> builder)
+        public void Configure(EntityTypeBuilder<DescricaoSimilar> builder)
         {
 
-
-            builder.HasIndex(x => x.descricao);
+            builder.HasIndex(x => x.produtoid);
+            builder.HasIndex(x => x.savdescricaoid);
 
         }
     }

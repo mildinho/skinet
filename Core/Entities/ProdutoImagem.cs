@@ -2,7 +2,7 @@
 
 namespace Core.Entities
 {
-    public class SAVProdutoImagem : BaseEntity
+    public class ProdutoImagem : BaseEntity
     {
        
         [ForeignKey("SAVProduto")]

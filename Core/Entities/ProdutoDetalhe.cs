@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class SAVProdutoDetalhe : BaseEntity
+    public class ProdutoDetalhe : BaseEntity
     {
-        public int savempresaid { get; set; }
+        public int empresaid { get; set; }
 
-        public int savprodutoid { get; set; }
+        public int produtoid { get; set; }
 
         public string? unidade_medida { get; set; } = string.Empty;
 

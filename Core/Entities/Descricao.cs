@@ -2,7 +2,7 @@
 
 namespace Core.Entities
 {
-    public class SAVDescricao : BaseEntity
+    public class Descricao : BaseEntity
     {
         public string descricao { get; set; } = string.Empty;
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class SAVProduto : BaseEntity
+    public class Produto : BaseEntity
     {
         public int savfabricanteid { get; set; }
 
@@ -19,8 +19,8 @@ namespace Core.Entities
         public string? conversao { get; set; } = string.Empty;
         public string? numero_fabrica { get; set; } = string.Empty;
 
-        public virtual List<SAVProdutoImagem>? imagens { get; set; } = [];
-        public virtual List<SAVProdutoDetalhe>? savprodutodetalhe { get; set; } = [];
-        public virtual List<SAVDescricaoSimilar>? savprodutosimilar { get; set; } = [];
+        public virtual List<ProdutoImagem>? imagens { get; set; } = [];
+        public virtual List<ProdutoDetalhe>? savprodutodetalhe { get; set; } = [];
+        public virtual List<DescricaoSimilar>? savprodutosimilar { get; set; } = [];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Core.Entities
 {
-    public class SAVEmpresaVinculo : BaseEntity
+    public class EmpresaVinculo : BaseEntity
     {
         [ForeignKey("SAVEmpresa")]
         public int origemid { get; set; }

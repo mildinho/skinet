@@ -3,12 +3,13 @@ using Core.Entities;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class SAVDadosController(StoreContext context) : Controller
+    public class DataController(StoreContext context) : Controller
     {
 
         [HttpPost("Produto")]
@@ -16,7 +17,7 @@ namespace API.Controllers
         {
 
             // CADASTRO DO FABRICANTE
-            List<SAVFabricante> fabricantes = context.SAVFabricante.ToList();
+            List<Fabricante> fabricantes = context.Fabricante.ToList();
 
             if (fabricantes.Count == 0)
             {
@@ -32,8 +33,8 @@ namespace API.Controllers
 
 
             // DETALHES DOS PRODUTOS
-            List<SAVProduto> produto_novo = new();
-            List<SAVProduto> produto_atualizar = new();
+            List<Produto> produto_novo = new();
+            List<Produto> produto_atualizar = new();
 
 
             for (int i = 0; i < dados.Count; i++)
@@ -53,9 +54,9 @@ namespace API.Controllers
                 }
 
 
-                var produto = context.SAVProduto.AsNoTracking().FirstOrDefault(p => p.referencia == item.referencia);
+                var produto = context.Produto.AsNoTracking().FirstOrDefault(p => p.referencia == item.referencia);
 
-                var detalhe = new SAVProduto
+                var detalhe = new Produto
                 {
                     savfabricanteid = fabricantes.FirstOrDefault(f => f.codigo_interno == item.fabricante_interno)?.id ?? 0,
                     referencia = item.referencia,
@@ -89,11 +90,11 @@ namespace API.Controllers
 
             //ADICIONAR NOVOS PRODUTOS
             if (produto_novo.Count > 0)
-                context.SAVProduto.AddRange(produto_novo);
+                context.Produto.AddRange(produto_novo);
 
             //ATUALIZAR NOVOS PRODUTOS
             if (produto_atualizar.Count > 0)
-                context.SAVProduto.UpdateRange(produto_atualizar);
+                context.Produto.UpdateRange(produto_atualizar);
 
 
             if (await context.SaveChangesAsync() > 0)
@@ -113,7 +114,7 @@ namespace API.Controllers
         {
 
             // CADASTRO DO PRODUTO
-            List<SAVProduto> produtos = context.SAVProduto.ToList();
+            List<Produto> produtos = context.Produto.ToList();
 
             if (produtos.Count == 0)
             {
@@ -129,8 +130,8 @@ namespace API.Controllers
 
 
             // DETALHES DOS PRODUTOS
-            List<SAVProdutoDetalhe> produto_detalhe_novo = new();
-            List<SAVProdutoDetalhe> produto_detalhe_atualizar = new();
+            List<ProdutoDetalhe> produto_detalhe_novo = new();
+            List<ProdutoDetalhe> produto_detalhe_atualizar = new();
 
 
             for (int i = 0; i < dados.Count; i++)
@@ -155,10 +156,10 @@ namespace API.Controllers
 
                     dados[i].savprodutoid = produto.id; // Associa o ID do produto ao detalhe
 
-                    var detalhe = new SAVProdutoDetalhe
+                    var detalhe = new ProdutoDetalhe
                     {
-                        savempresaid = item.savempresaid,
-                        savprodutoid = item.savprodutoid,
+                        empresaid = item.savempresaid,
+                        produtoid = item.savprodutoid,
                         unidade_medida = item.unidade_medida,
                         ncm = item.ncm,
                         multiplo_venda = item.multiplo_venda,
@@ -170,9 +171,9 @@ namespace API.Controllers
                         saldo_disponivel = item.saldo_disponivel
                     };
 
-                    var dados_detalhe = await context.SAVProdutoDetalhe.AsNoTracking().
-                        Where(x => x.savempresaid == item.savempresaid &&
-                                    x.savprodutoid == item.savprodutoid).FirstOrDefaultAsync();
+                    var dados_detalhe = await context.ProdutoDetalhe.AsNoTracking().
+                        Where(x => x.empresaid == item.savempresaid &&
+                                    x.produtoid == item.savprodutoid).FirstOrDefaultAsync();
 
                     // ATUALIZA DETALHE EXISTENTE
                     if (dados_detalhe is not null)
@@ -192,11 +193,11 @@ namespace API.Controllers
 
             //ADICIONAR NOVOS PRODUTOS
             if (produto_detalhe_novo.Count > 0)
-                context.SAVProdutoDetalhe.AddRange(produto_detalhe_novo);
+                context.ProdutoDetalhe.AddRange(produto_detalhe_novo);
 
             //ATUALIZAR NOVOS PRODUTOS
             if (produto_detalhe_atualizar.Count > 0)
-                context.SAVProdutoDetalhe.UpdateRange(produto_detalhe_atualizar);
+                context.ProdutoDetalhe.UpdateRange(produto_detalhe_atualizar);
 
 
             if (await context.SaveChangesAsync() > 0)
@@ -212,6 +213,39 @@ namespace API.Controllers
 
 
 
+        [HttpPost("AtualizarSimilarPorDescricao")]
+        public async Task<ActionResult> Atualizar_SimilarPorDescricao()
+        {
+            var produto_base = context.Produto.Select(p => new { p.id, p.descricao }).ToList();
+            var descricao_base = context.Descricao.ToList();
 
+            context.Database.ExecuteSqlRaw("DELETE FROM SAVDescricaoSimilar");
+            await context.SaveChangesAsync();
+
+            var descricao_similar_novo = new List<DescricaoSimilar>();
+
+            foreach (var produto in produto_base)
+            {
+
+                descricao_similar_novo.Add(new DescricaoSimilar
+                {
+                    produtoid = produto.id,
+                    savdescricaoid = descricao_base.FirstOrDefault(d => d.descricao == produto.descricao)?.id ?? 0
+                });
+            }
+
+            if (descricao_similar_novo.Count > 0)
+            {
+                await context.DescricaoSimilar.AddRangeAsync(descricao_similar_novo);
+
+                if (await context.SaveChangesAsync() > 0)
+                    return Ok("Similar por Descrição Atualizado com Sucesso");
+                else
+                    return BadRequest("Falha na Atualizacao de Similar por Descrição");
+            }
+            else
+                return Ok("Não Houve Atualização de Registros");
+
+        }
     }
 }

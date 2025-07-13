@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class SAVEmpresa : BaseEntity
+    public class Empresa : BaseEntity
     {
         // Dados
         public string? razao_social { get; set; } = string.Empty;

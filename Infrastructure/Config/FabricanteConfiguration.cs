@@ -10,14 +10,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Config
 {
-    public class SAVEmpresaVinculoConfiguration : IEntityTypeConfiguration<SAVEmpresaVinculo>
+    public class FabricanteConfiguration : IEntityTypeConfiguration<Fabricante>
     {
-        public void Configure(EntityTypeBuilder<SAVEmpresaVinculo> builder)
+        public void Configure(EntityTypeBuilder<Fabricante> builder)
         {
-
-            builder.HasIndex(x => x.origemid);
-            builder.HasIndex(x => x.origemid);
-
+            builder.HasIndex(x => x.cnpj_cpf);
+            builder.HasIndex(x => x.codigo_interno);
         }
     }
 }

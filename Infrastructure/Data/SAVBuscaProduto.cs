@@ -16,13 +16,13 @@ namespace Infrastructure.Data
             List<int> idProdutos = new List<int>();
             List<int> idSimilar = new List<int>();
 
-            var query = storeContext.SAVProduto.AsQueryable();
+            var query = storeContext.Produto.AsQueryable();
 
             // FILTRO PRINCIPAL DO PRODUTO
             query = query.Where(
-                p => p.referencia.StartsWith(pesquisar) || p.numero_fabrica.StartsWith(pesquisar) ||
+                p => p.referencia.StartsWith(pesquisar) || p.numero_fabrica!.StartsWith(pesquisar) ||
                      p.codigobarra01 == pesquisar || p.codigobarra02 == pesquisar ||
-                     p.numero_original == pesquisar || p.descricao.Contains(pesquisar)
+                     p.numero_original == pesquisar || p.descricao!.Contains(pesquisar)
             );
 
             idProdutos = await query.Select(x => x.id).ToListAsync();
@@ -31,10 +31,10 @@ namespace Infrastructure.Data
 
 
             // FILTRO POR SIMILARES - DESCRIÇÃO
-            var queryDescricaoSimilar = storeContext.SAVDescricaoSimilar.AsQueryable();
+            var queryDescricaoSimilar = storeContext.DescricaoSimilar.AsQueryable();
 
             queryDescricaoSimilar = queryDescricaoSimilar.Where(
-                x => idProdutos.Contains(x.savprodutoid)
+                x => idProdutos.Contains(x.produtoid)
             );
 
             idSimilar = await queryDescricaoSimilar.Select(x => x.savdescricaoid).ToListAsync();
@@ -43,7 +43,7 @@ namespace Infrastructure.Data
                 x => idSimilar.Contains(x.savdescricaoid)
             );
 
-            idSimilar = await queryDescricaoSimilar.Select(x => x.savprodutoid).ToListAsync();
+            idSimilar = await queryDescricaoSimilar.Select(x => x.produtoid).ToListAsync();
 
 
 

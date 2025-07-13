@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 
 namespace Core.Entities
 {
-    public class BaseEntity
+    public abstract class BaseEntity
     {
         [Key]
         public int id { get; set; }
+
+       // public DateTime DataCadastro { get; private set; } = DateTime.UtcNow;
+       // public DateTime DataAlteracao { get; private set; } = DateTime.UtcNow;
     }
 }
