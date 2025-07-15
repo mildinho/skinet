@@ -3,7 +3,7 @@ using Core.Entities;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Text.Json;
 
 namespace API.Controllers
 {
@@ -11,6 +11,42 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class DataController(StoreContext context) : Controller
     {
+
+        [HttpPost("ProdutoArquivo")]
+        public async Task<IActionResult> CriaProdutoArquivo(List<IFormFile> files)
+        {
+            long size = files.Sum(f => f.Length);
+
+            foreach (var formFile in files)
+            {
+                if (formFile.Length > 0)
+                {
+                    var filePath = Path.GetTempFileName();
+
+                    using (var stream = System.IO.File.Create(filePath))
+                    {
+                        await formFile.CopyToAsync(stream);
+                        stream.Close();
+
+                        var produtcs = await System.IO.File.ReadAllTextAsync(stream.Name);
+
+                        System.IO.File.Delete(filePath); // Deleta o arquivo temporário após o uso
+
+                        var productList = JsonSerializer.Deserialize<List<ProdutoDto>>(produtcs);
+                        if (productList == null) return BadRequest("Erro de Conversao de Arquivo ");
+
+                        CriaProduto(productList);
+
+
+
+                    }
+                }
+            }
+
+
+            return Ok(new { count = files.Count, size, filePath = files.Select(f => f.FileName) });
+        }
+
 
         [HttpPost("Produto")]
         public async Task<ActionResult> CriaProduto(List<ProdutoDto> dados)
@@ -43,7 +79,7 @@ namespace API.Controllers
 
 
 
-                if (string.IsNullOrEmpty(item.fabricante_interno))
+                if (item.fabricanteid <= 0)
                 {
                     return BadRequest("O Fabricante do produto não pode ser nula ou vazia");
                 }
@@ -58,7 +94,7 @@ namespace API.Controllers
 
                 var detalhe = new Produto
                 {
-                    savfabricanteid = fabricantes.FirstOrDefault(f => f.codigo_interno == item.fabricante_interno)?.id ?? 0,
+                    fabricanteid = item.fabricanteid,
                     referencia = item.referencia,
                     codigobarra01 = item.codigobarra01,
                     codigobarra02 = item.codigobarra02,
@@ -68,7 +104,7 @@ namespace API.Controllers
                     numero_fabrica = item.numero_fabrica
                 };
 
-                if (detalhe.savfabricanteid <= 0)
+                if (detalhe.fabricanteid <= 0)
                 {
                     continue; // Ignora o produto se o fabricante não for encontrado
                     //return BadRequest("O ID do Fabricante deve ser maior que zero");
@@ -212,8 +248,43 @@ namespace API.Controllers
         }
 
 
+        [HttpPut("AtualizarDescricao")]
+        public async Task<ActionResult> Atualizar_Descricao()
+        {
 
-        [HttpPost("AtualizarSimilarPorDescricao")]
+            context.Database.ExecuteSqlRaw("DELETE FROM Descricao");
+            await context.SaveChangesAsync();
+
+            var product_descricao = context.Produto.Select(p => p.descricao).Distinct().ToList();
+
+            var descricao = new List<Descricao>();
+
+            foreach (var desc in product_descricao)
+            {
+                descricao.Add(new Descricao
+                {
+                    descricao = desc
+
+                });
+            }
+
+            if (descricao.Count > 0)
+            {
+                await context.Descricao.AddRangeAsync(descricao);
+
+                if (await context.SaveChangesAsync() > 0)
+                    return Ok("Cadastro de Descrição Atualizado com Sucesso");
+                else
+                    return BadRequest("Falha na Atualizacao de Descrição");
+            }
+            else
+                return Ok("Não Houve Atualização de Registros");
+
+
+        }
+
+
+        [HttpPut("AtualizarSimilarPorDescricao")]
         public async Task<ActionResult> Atualizar_SimilarPorDescricao()
         {
             var produto_base = context.Produto.Select(p => new { p.id, p.descricao }).ToList();

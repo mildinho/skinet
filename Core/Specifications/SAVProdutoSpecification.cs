@@ -13,17 +13,17 @@ namespace Core.Specifications
         x =>
 
             ( specParams.Id.Contains(x.id)) ||
-            ( specParams.FabricantesId.Contains(x.savfabricanteid))
+            ( specParams.FabricantesId.Contains(x.fabricanteid))
         )
         {
             //Incluindo os Similares
-            Includes.Add(x => x.savprodutosimilar);
+            Includes.Add(x => x.produtosimilar);
 
             //Incluindo as Imagens
             Includes.Add(x => x.imagens);
 
             // Incluindo os Detalhes do Produto
-            Includes.Add(x => x.savprodutodetalhe.
+            Includes.Add(x => x.produtodetalhe.
                 Where(d => specParams.IDEmpresaParceira.Contains(d.empresaid)));
           
 
@@ -32,10 +32,10 @@ namespace Core.Specifications
             switch (specParams.Sort)
             {
                 case "fabricanteAsc":
-                    AddOrderBy(p => p.savfabricanteid);
+                    AddOrderBy(p => p.fabricanteid);
                     break;
                 case "fabricanteDesc":
-                    AddOrderByDescending(p => p.savfabricanteid);
+                    AddOrderByDescending(p => p.fabricanteid);
                     break;
                 default:
                     AddOrderBy(p => p.referencia);

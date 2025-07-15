@@ -320,30 +320,6 @@ namespace Infrastructure.Data
             }
 
 
-            
-            // CADASTRANDO DESCRICAO UNICA DO PRODUTO
-            if (!context.Descricao.Any())
-            {
-                var product_descricao = context.Produto.Select(p => p.descricao).Distinct().ToList();
-
-                var descricao = new List<Descricao>();
-
-                foreach (var desc in product_descricao)
-                {
-                    descricao.Add(new Descricao
-                    {
-                        descricao = desc
-
-                    });
-                }
-
-                if (descricao == null) return;
-
-                context.Descricao.AddRange(descricao);
-                await context.SaveChangesAsync();
-            }
-
-
 
 
 

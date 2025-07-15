@@ -7,38 +7,54 @@ namespace API.DTOs
         public int id { get; set; }
         public string? Razao_Nome { get; set; } = string.Empty;
         public string? Fantasia { get; set; } = string.Empty;
-        public string? Email { get; set; } = string.Empty;
         public string? Telefone { get; set; } = string.Empty;
-        public string? Celular { get; set; }
-        public string? CNPJ_CPF { get; set; }
-        public string? Endereco { get; set; }
-        public string? Numero { get; set; }
-        public string? Complemento { get; set; }
-        public string? Bairro { get; set; }
-        public string? Cidade { get; set; }
-        public string? Estado { get; set; }
-        public string? CEP { get; set; }
+        public string? Celular { get; set; } = string.Empty;
+        public string? CNPJ_CPF { get; set; } = string.Empty;
+        public string? Inscricao_Estadual { get; set; } = string.Empty;
+        public string? Endereco { get; set; } = string.Empty;
+        public string? Numero { get; set; } = string.Empty;
+        public string? Complemento { get; set; } = string.Empty;
+        public string? Bairro { get; set; } = string.Empty;
+        public string? Cidade { get; set; } = string.Empty;
+        public string? Estado { get; set; } = string.Empty;
+        public string? CEP { get; set; } = string.Empty;
+        public string? email { get; set; } = string.Empty;
+        public string? email_nfe { get; set; } = string.Empty;
 
 
         // DADOS DE COBRANÇA
-        public string? Endereco_Cobranca { get; set; }
-        public string? Numero_Cobranca { get; set; }
-        public string? Complemento_Cobranca { get; set; }
-        public string? Bairro_Cobranca { get; set; }
-        public string? Cidade_Cobranca { get; set; }
-        public string? Estado_Cobranca { get; set; }
-        public string? CEP_Cobranca { get; set; }
+        public string? Endereco_Cobranca { get; set; } = string.Empty;
+        public string? Numero_Cobranca { get; set; } = string.Empty;
+        public string? Complemento_Cobranca { get; set; } = string.Empty;
+        public string? Bairro_Cobranca { get; set; } = string.Empty;
+        public string? Cidade_Cobranca { get; set; } = string.Empty;
+        public string? Estado_Cobranca { get; set; } = string.Empty;
+        public string? CEP_Cobranca { get; set; } = string.Empty;
 
 
 
         // DADOS DE ENREGA
-        public string? Endereco_Entrega { get; set; }
-        public string? Numero_Entrega { get; set; }
-        public string? Complemento_Entrega { get; set; }
-        public string? Bairro_Entrega { get; set; }
-        public string? Cidade_Entrega { get; set; }
-        public string? Estado_Entrega { get; set; }
-        public string? CEP_Entrega { get; set; }
+        public string? Endereco_Entrega { get; set; } = string.Empty;
+        public string? Numero_Entrega { get; set; } = string.Empty;
+        public string? Complemento_Entrega { get; set; } = string.Empty;
+        public string? Bairro_Entrega { get; set; } = string.Empty;
+        public string? Cidade_Entrega { get; set; } = string.Empty;
+        public string? Estado_Entrega { get; set; } = string.Empty;
+        public string? CEP_Entrega { get; set; } = string.Empty;
+
+        public Boolean Isento { get; set; } = false;
+        public Boolean Simples_Nacional { get; set; } = false;
+        public Boolean Consumidor_Final { get; set; } = false;
+
+        // DADOS ADICIONAIS ( INFORMACAO LIVRE )
+        public string? Dados_Adicional { get; set; } = string.Empty;
+
+
+        // DADOS DO COMPRADOR
+        public string? Nome_Comprador { get; set; } = string.Empty;
+        public DateOnly? Nascimento_Comprador { get; set; }
+        public string? Telefone_Comprador { get; set; } = string.Empty;
+        public string? Celular_Comprador { get; set; } = string.Empty;
 
 
         public static implicit operator FichaCliente(FichaClienteDto dto)
@@ -48,7 +64,6 @@ namespace API.DTOs
                 id = dto.id,
                 Razao_Nome = dto.Razao_Nome,
                 Fantasia = dto.Fantasia,
-                Email = dto.Email,
                 Telefone = dto.Telefone,
                 Celular = dto.Celular,
                 CNPJ_CPF = dto.CNPJ_CPF,
@@ -72,7 +87,19 @@ namespace API.DTOs
                 Bairro_Entrega = dto.Bairro_Entrega,
                 Cidade_Entrega = dto.Cidade_Entrega,
                 Estado_Entrega = dto.Estado_Entrega,
-                CEP_Entrega = dto.CEP_Entrega
+                CEP_Entrega = dto.CEP_Entrega,
+                Celular_Comprador = dto.Celular_Comprador,
+                Telefone_Comprador = dto.Telefone_Comprador,
+                Nome_Comprador = dto.Nome_Comprador,
+                Nascimento_Comprador = dto.Nascimento_Comprador,
+                Isento = dto.Isento,
+                Simples_Nacional = dto.Simples_Nacional,
+                Consumidor_Final = dto.Consumidor_Final,
+                Dados_Adicional = dto.Dados_Adicional,
+                email = dto.email,
+                email_nfe = dto.email_nfe,
+                Inscricao_Estadual = dto.Inscricao_Estadual
+
             };
         }
 
@@ -83,7 +110,6 @@ namespace API.DTOs
                 id = entity.id,
                 Razao_Nome = entity.Razao_Nome,
                 Fantasia = entity.Fantasia,
-                Email = entity.Email,
                 Telefone = entity.Telefone,
                 Celular = entity.Celular,
                 CNPJ_CPF = entity.CNPJ_CPF,
@@ -107,7 +133,19 @@ namespace API.DTOs
                 Bairro_Entrega = entity.Bairro_Entrega,
                 Cidade_Entrega = entity.Cidade_Entrega,
                 Estado_Entrega = entity.Estado_Entrega,
-                CEP_Entrega = entity.CEP_Entrega
+                CEP_Entrega = entity.CEP_Entrega,
+                Celular_Comprador = entity.Celular_Comprador,
+                Telefone_Comprador = entity.Telefone_Comprador,
+                Nome_Comprador = entity.Nome_Comprador,
+                Nascimento_Comprador = entity.Nascimento_Comprador,
+                Isento = entity.Isento,
+                Simples_Nacional = entity.Simples_Nacional,
+                Consumidor_Final = entity.Consumidor_Final,
+                Dados_Adicional = entity.Dados_Adicional,
+                email = entity.email,
+                email_nfe = entity.email_nfe,
+                Inscricao_Estadual = entity.Inscricao_Estadual
+
             };
         }
     }
