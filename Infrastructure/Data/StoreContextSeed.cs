@@ -23,23 +23,6 @@ namespace Infrastructure.Data
             }
 
 
-
-
-
-            // CADASTRANDO FABRICANTE
-            if (!context.Fabricante.Any())
-            {
-
-                var objeto = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/fabricante_sav.json");
-
-                var objetoLista = JsonSerializer.Deserialize<List<Fabricante>>(objeto);
-                if (objetoLista == null) return;
-
-                context.Fabricante.AddRange(objetoLista);
-                await context.SaveChangesAsync();
-            }
-
-
             // CADASTRANDO DA EMPRESA
             if (!context.Empresa.Any())
             {

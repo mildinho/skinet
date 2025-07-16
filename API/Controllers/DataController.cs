@@ -12,6 +12,82 @@ namespace API.Controllers
     public class DataController(StoreContext context) : Controller
     {
 
+        [HttpPost("Fabricante")]
+        public async Task<ActionResult> CriaFabricante(List<FabricanteDto> dados)
+        {
+
+           
+            // LISTA DE PRODUTOS PARA CARREGAR
+            if (dados == null || dados.Count == 0)
+            {
+                return BadRequest("Dados não podem ser nulos ou vazios");
+            }
+
+
+            // DETALHES DOS PRODUTOS
+            List<Fabricante> fabricante_novo = new();
+            List<Fabricante> fabricante_atualizar = new();
+
+
+            for (int i = 0; i < dados.Count; i++)
+            {
+                var item = dados[i];
+
+
+                if (string.IsNullOrEmpty(item.id_legado))
+                {
+                    return BadRequest("A referência do produto não pode ser nula ou vazia");
+                }
+
+
+                var fabricante = context.Fabricante.AsNoTracking().FirstOrDefault(p => p.id_legado == item.id_legado);
+
+                var detalhe = new Fabricante
+                {
+                    
+                    id_legado = item.id_legado,
+                    razao_social = item.razao_social,
+                    fantasia = item.fantasia,
+                    cnpj_cpf = item.cnpj_cpf
+
+                };
+
+               
+
+                if (fabricante is not null)
+                {
+                    detalhe.id = fabricante.id; // Mantém o ID do detalhe existente
+                    fabricante_atualizar.Add(detalhe);
+                }
+                else   // ADICIONA NOVO DETALHE
+                {
+                    fabricante_novo.Add(detalhe);
+                }
+
+
+
+            }
+
+            //ADICIONAR NOVOS PRODUTOS
+            if (fabricante_novo.Count > 0)
+                context.Fabricante.AddRange(fabricante_novo);
+
+            //ATUALIZAR NOVOS PRODUTOS
+            if (fabricante_atualizar.Count > 0)
+                context.Fabricante.UpdateRange(fabricante_atualizar);
+
+
+            if (await context.SaveChangesAsync() > 0)
+            {
+                return Ok("Fabricantes Atualizado com Sucesso");
+            }
+            else
+            {
+                return BadRequest("Falha na Atualização dos Fabricantes");
+            }
+
+        }
+
         [HttpPost("ProdutoArquivo")]
         public async Task<IActionResult> CriaProdutoArquivo(List<IFormFile> files)
         {
