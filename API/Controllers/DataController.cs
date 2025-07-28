@@ -12,137 +12,216 @@ namespace API.Controllers
     public class DataController(StoreContext context) : Controller
     {
 
+        [HttpPost("FabricanteArquivo")]
+        public async Task<IActionResult> CriaFabricanteArquivo(IFormFile formFile)
+        {
+            if (formFile.Length > 0)
+            {
+                var filePath = Path.GetTempFileName();
+
+                using (var stream = System.IO.File.Create(filePath))
+                {
+                    await formFile.CopyToAsync(stream);
+                    stream.Close();
+
+                    var fabricantes = await System.IO.File.ReadAllTextAsync(stream.Name);
+
+                    System.IO.File.Delete(filePath); // Deleta o arquivo temporário após o uso
+
+                    var fabricantesList = JsonSerializer.Deserialize<List<FabricanteDto>>(fabricantes);
+                    if (fabricantesList == null) return BadRequest("Erro de Conversao de Arquivo ");
+
+                    Boolean conversaOK = await AtualizaFabricante(fabricantesList);
+
+                    if (conversaOK)
+                        return Ok("Fabricantes Atualizado com Sucesso");
+
+                    return BadRequest("Falha na Atualização dos Fabricantes");
+                }
+            }
+
+            return NoContent();
+        }
+
+
         [HttpPost("Fabricante")]
         public async Task<ActionResult> CriaFabricante(List<FabricanteDto> dados)
         {
-
-           
-            // LISTA DE PRODUTOS PARA CARREGAR
             if (dados == null || dados.Count == 0)
-            {
                 return BadRequest("Dados não podem ser nulos ou vazios");
+
+            Boolean conversaOK = await AtualizaFabricante(dados);
+
+            if (conversaOK)
+                return Ok("Fabricantes Atualizado com Sucesso");
+
+            return BadRequest("Falha na Atualização dos Fabricantes");
+
+        }
+
+
+        [HttpDelete("FabricanteExcluir")]
+        public async Task<ActionResult> ExcluirFabricante(List<int> dados)
+        {
+            if (dados == null || dados.Count == 0)
+                return BadRequest("Dados não podem ser nulos ou vazios");
+
+            for (int i = 0; i < dados.Count; i++)
+            {
+                var item = dados[i];
+                if (item <= 0)
+                    continue; // Ignora itens inválidos na lista
+
+                Fabricante? fabricante = await context.Fabricante.FindAsync(item);
+                if (fabricante is not null)
+                {
+                    context.Fabricante.Remove(fabricante);
+                }
             }
 
+            if (await context.SaveChangesAsync() > 0)
+                return Ok("Fabricante Excluido com Sucesso");
 
-            // DETALHES DOS PRODUTOS
+            return BadRequest("Falha na Exclusao dos Fabricantes");
+
+        }
+
+
+
+
+        private async Task<bool> AtualizaFabricante(List<FabricanteDto> dados)
+        {
+            if (dados == null || dados.Count == 0)
+                return false;
+
             List<Fabricante> fabricante_novo = new();
             List<Fabricante> fabricante_atualizar = new();
 
 
             for (int i = 0; i < dados.Count; i++)
             {
+
                 var item = dados[i];
+                if (item == null || (item.id == 0 && string.IsNullOrEmpty(item.id_legado)))
+                    continue; // Ignora itens nulos na lista
 
 
-                if (string.IsNullOrEmpty(item.id_legado))
-                {
-                    return BadRequest("A referência do produto não pode ser nula ou vazia");
-                }
+                Fabricante? fabricante = null!;
 
+                if (item.id > 0)
+                    fabricante = await context.Fabricante.AsNoTracking().FirstOrDefaultAsync(p => p.id == item.id);
+                else
+                    fabricante = await context.Fabricante.AsNoTracking().FirstOrDefaultAsync(p => p.id_legado == item.id_legado);
 
-                var fabricante = context.Fabricante.AsNoTracking().FirstOrDefault(p => p.id_legado == item.id_legado);
-
-                var detalhe = new Fabricante
-                {
-                    
-                    id_legado = item.id_legado,
-                    razao_social = item.razao_social,
-                    fantasia = item.fantasia,
-                    cnpj_cpf = item.cnpj_cpf
-
-                };
-
-               
+                Fabricante objeto = item;
 
                 if (fabricante is not null)
                 {
-                    detalhe.id = fabricante.id; // Mantém o ID do detalhe existente
-                    fabricante_atualizar.Add(detalhe);
+                    objeto.id = fabricante.id;
+                    fabricante_atualizar.Add(objeto);
                 }
-                else   // ADICIONA NOVO DETALHE
-                {
-                    fabricante_novo.Add(detalhe);
-                }
-
+                else
+                    fabricante_novo.Add(objeto);
 
 
             }
 
-            //ADICIONAR NOVOS PRODUTOS
             if (fabricante_novo.Count > 0)
                 context.Fabricante.AddRange(fabricante_novo);
 
-            //ATUALIZAR NOVOS PRODUTOS
             if (fabricante_atualizar.Count > 0)
                 context.Fabricante.UpdateRange(fabricante_atualizar);
 
 
             if (await context.SaveChangesAsync() > 0)
-            {
-                return Ok("Fabricantes Atualizado com Sucesso");
-            }
-            else
-            {
-                return BadRequest("Falha na Atualização dos Fabricantes");
-            }
+                return true;
+            return false;
 
         }
 
+
+
         [HttpPost("ProdutoArquivo")]
-        public async Task<IActionResult> CriaProdutoArquivo(List<IFormFile> files)
+        public async Task<IActionResult> CriaProdutoArquivo(IFormFile formFile)
         {
-            long size = files.Sum(f => f.Length);
 
-            foreach (var formFile in files)
+
+            if (formFile.Length > 0)
             {
-                if (formFile.Length > 0)
+                var filePath = Path.GetTempFileName();
+
+                using (var stream = System.IO.File.Create(filePath))
                 {
-                    var filePath = Path.GetTempFileName();
+                    await formFile.CopyToAsync(stream);
+                    stream.Close();
 
-                    using (var stream = System.IO.File.Create(filePath))
-                    {
-                        await formFile.CopyToAsync(stream);
-                        stream.Close();
+                    var produtcs = await System.IO.File.ReadAllTextAsync(stream.Name);
 
-                        var produtcs = await System.IO.File.ReadAllTextAsync(stream.Name);
+                    System.IO.File.Delete(filePath); // Deleta o arquivo temporário após o uso
 
-                        System.IO.File.Delete(filePath); // Deleta o arquivo temporário após o uso
+                    var productList = JsonSerializer.Deserialize<List<ProdutoDto>>(produtcs);
+                    if (productList == null) return BadRequest("Erro de Conversao de Arquivo ");
 
-                        var productList = JsonSerializer.Deserialize<List<ProdutoDto>>(produtcs);
-                        if (productList == null) return BadRequest("Erro de Conversao de Arquivo ");
+                    Boolean conversaOK = await AtualizaProduto(productList);
 
-                        CriaProduto(productList);
+                    if (conversaOK)
+                        return Ok("Produtos Atualizado com Sucesso");
 
+                    return BadRequest("Falha na Atualização dos Produtos");
 
-
-                    }
                 }
             }
 
-
-            return Ok(new { count = files.Count, size, filePath = files.Select(f => f.FileName) });
+            return NoContent();
         }
 
 
         [HttpPost("Produto")]
         public async Task<ActionResult> CriaProduto(List<ProdutoDto> dados)
         {
-
-            // CADASTRO DO FABRICANTE
-            List<Fabricante> fabricantes = context.Fabricante.ToList();
-
-            if (fabricantes.Count == 0)
-            {
-                return BadRequest("Não Encontrado FABRICANTE na SAVFABRICANTE");
-            }
-
-
-            // LISTA DE PRODUTOS PARA CARREGAR
             if (dados == null || dados.Count == 0)
-            {
                 return BadRequest("Dados não podem ser nulos ou vazios");
+
+            Boolean conversaOK = await AtualizaProduto(dados);
+
+            if (conversaOK)
+                return Ok("Fabricantes Atualizado com Sucesso");
+
+            return BadRequest("Falha na Atualização dos Fabricantes");
+
+        }
+
+        [HttpDelete("ProdutoExcluir")]
+        public async Task<ActionResult> ExcluirProduto(List<int> dados)
+        {
+            if (dados == null || dados.Count == 0)
+                return BadRequest("Dados não podem ser nulos ou vazios");
+
+            for (int i = 0; i < dados.Count; i++)
+            {
+                var item = dados[i];
+                if (item <= 0)
+                    continue; // Ignora itens inválidos na lista
+
+                Produto? produto = await context.Produto.FindAsync(item);
+                if (produto is not null)
+                {
+                    context.Produto.Remove(produto);
+                }
             }
 
+            if (await context.SaveChangesAsync() > 0)
+                return Ok("Produto Excluido com Sucesso");
+
+            return BadRequest("Falha na Exclusao do Produto");
+
+        }
+
+
+        private async Task<bool> AtualizaProduto(List<ProdutoDto> dados)
+        {
+            if (dados == null || dados.Count == 0)
+                return false;
 
             // DETALHES DOS PRODUTOS
             List<Produto> produto_novo = new();
@@ -153,72 +232,44 @@ namespace API.Controllers
             {
                 var item = dados[i];
 
+                if (item == null || item.fabricanteid == 0 || string.IsNullOrEmpty(item.referencia))
+                    continue; // Ignora itens nulos na lista
 
+                Produto? produto = null!;
 
-                if (item.fabricanteid <= 0)
-                {
-                    return BadRequest("O Fabricante do produto não pode ser nula ou vazia");
-                }
+                if (item.id > 0)
+                    produto = await context.Produto.AsNoTracking().FirstOrDefaultAsync(p => p.id == item.id);
+                else
+                    produto = context.Produto.AsNoTracking().FirstOrDefault(p => p.referencia == item.referencia);
 
-                if (string.IsNullOrEmpty(item.referencia))
-                {
-                    return BadRequest("A referência do produto não pode ser nula ou vazia");
-                }
-
-
-                var produto = context.Produto.AsNoTracking().FirstOrDefault(p => p.referencia == item.referencia);
-
-                var detalhe = new Produto
-                {
-                    fabricanteid = item.fabricanteid,
-                    referencia = item.referencia,
-                    codigobarra01 = item.codigobarra01,
-                    codigobarra02 = item.codigobarra02,
-                    descricao = item.descricao,
-                    numero_original = item.numero_original,
-                    conversao = item.conversao,
-                    numero_fabrica = item.numero_fabrica
-                };
-
-                if (detalhe.fabricanteid <= 0)
-                {
-                    continue; // Ignora o produto se o fabricante não for encontrado
-                    //return BadRequest("O ID do Fabricante deve ser maior que zero");
-                }
+                Produto objeto = item;
 
                 if (produto is not null)
                 {
-                    detalhe.id = produto.id; // Mantém o ID do detalhe existente
-                    produto_atualizar.Add(detalhe);
+                    objeto.id = produto.id; // Mantém o ID do detalhe existente
+                    produto_atualizar.Add(objeto);
                 }
-                else   // ADICIONA NOVO DETALHE
-                {
-                    produto_novo.Add(detalhe);
-                }
-
-
-
+                else
+                    produto_novo.Add(objeto);
             }
 
-            //ADICIONAR NOVOS PRODUTOS
             if (produto_novo.Count > 0)
                 context.Produto.AddRange(produto_novo);
 
-            //ATUALIZAR NOVOS PRODUTOS
             if (produto_atualizar.Count > 0)
                 context.Produto.UpdateRange(produto_atualizar);
 
 
             if (await context.SaveChangesAsync() > 0)
-            {
-                return Ok("Produtos Atualizado com Sucesso");
-            }
-            else
-            {
-                return BadRequest("Falha na Atualização dos Produtos");
-            }
+                return true;
+            return false;
 
         }
+
+
+
+
+
 
 
         [HttpPost("ProdutoDetalhe")]
@@ -290,7 +341,6 @@ namespace API.Controllers
                     // ATUALIZA DETALHE EXISTENTE
                     if (dados_detalhe is not null)
                     {
-
                         detalhe.id = dados_detalhe.id; // Mantém o ID do detalhe existente
                         produto_detalhe_atualizar.Add(detalhe);
                     }
@@ -327,7 +377,6 @@ namespace API.Controllers
         [HttpPut("AtualizarDescricao")]
         public async Task<ActionResult> Atualizar_Descricao()
         {
-
             context.Database.ExecuteSqlRaw("DELETE FROM Descricao");
             await context.SaveChangesAsync();
 
@@ -337,6 +386,9 @@ namespace API.Controllers
 
             foreach (var desc in product_descricao)
             {
+                if (string.IsNullOrEmpty(desc))
+                    continue; // Ignora descrições vazias   
+
                 descricao.Add(new Descricao
                 {
                     descricao = desc

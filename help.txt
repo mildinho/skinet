@@ -8,6 +8,10 @@ Para subir o docker na mao
    "email": "fer@uol.com.br",
   "password": "@#$789AAbb__"
   }
+  {
+  fer@uol.com
+  @#$789AAbb__
+  }
 
 
 // SCRIP PARA ALIMENTAR A TABELA SAVPRODUTO - EXPORTAR COMO JSON

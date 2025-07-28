@@ -5,6 +5,7 @@ namespace API.DTOs
 {
     public class ProdutoDto
     {
+        public int id { get; set; }
         public int fabricanteid { get; set; }
 
         public string referencia { get; set; } = string.Empty;

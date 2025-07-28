@@ -14,8 +14,8 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext() // Adiciona propriedades do contexto do log
     .WriteTo.Console()
     .WriteTo.File("logs/skinet.txt", rollingInterval: RollingInterval.Hour) // Logs diários
-                                                                           // Adicione outros sinks aqui, por exemplo:
-                                                                           // .WriteTo.Seq("http://localhost:5341") // Se você estiver usando o Seq
+                                                                            // Adicione outros sinks aqui, por exemplo:
+                                                                            // .WriteTo.Seq("http://localhost:5341") // Se você estiver usando o Seq
     .CreateLogger();
 
 // **Passo 2: Usar o Serilog como provedor de log para o .NET**
@@ -23,11 +23,12 @@ builder.Host.UseSerilog();
 
 
 // Add services to the container.
-
+builder.Services.AddControllers();
 builder.Services.AddDbContext<StoreContext>(opt =>
 {
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ISAVBuscaProduto, SAVBuscaProduto>();
@@ -50,9 +51,6 @@ builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<AppUser>().AddEntityFrameworkStores<StoreContext>();
 
 
-
-
-builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -68,25 +66,29 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-
 app.UseMiddleware<ExceptionMiddleware>();
+
+app.UseHttpsRedirection();
 
 app.UseCors(policy =>
 {
-    policy.AllowAnyHeader()
+
+    policy.WithOrigins("https://localhost:4200", "http://localhost:4200")
+           .AllowAnyHeader()
           .AllowAnyMethod()
-          .AllowCredentials()
-          .WithOrigins("https://localhost:4200", "http://localhost:4200");
+          .AllowCredentials();
 });
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
 // Este faz os Endpoints de Identity funcionar
 app.MapGroup("api").MapIdentityApi<AppUser>();
+
+
+
 try
 {
     using var scope = app.Services.CreateScope();

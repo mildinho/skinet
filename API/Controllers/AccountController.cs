@@ -9,7 +9,7 @@ namespace API.Controllers
 {
     public class AccountController(SignInManager<AppUser> signInManager) : BaseAPIController
     {
-        [HttpPatch("register")]
+        [HttpPost("register")]
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
             var user = new AppUser
@@ -44,15 +44,13 @@ namespace API.Controllers
             return Ok(new { message = "User logged out successfully" });
         }
 
-        [Authorize]
         [HttpGet("user-info")]
-        public async Task<ActionResult<AppUser>> GetUserInfoAsync()
+        public async Task<ActionResult> GetUserInfo()
         {
 
-            if (User.Identity?.IsAuthenticated == false)
-            {
-                return Unauthorized(new { message = "User is not authenticated" });
-            }
+       
+            
+            if (User.Identity?.IsAuthenticated == false) return NoContent();
 
             var user = await signInManager.UserManager.GetUserByEmailWithAddress(User);
 
@@ -69,7 +67,7 @@ namespace API.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("auth-status")]
         public ActionResult GetAuthState()
         {
             return Ok(new { IsAuthenticated = User.Identity?.IsAuthenticated ?? false });
