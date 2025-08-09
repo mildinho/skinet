@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.Specifications
+﻿namespace Core.Specifications
 {
     public class SAVProdutoSpecParams : PagingParams
     {
         private List<int> _fabricantes = new List<int>();
-          private List<int> _idEmpresaParceira = new List<int>();       //Lista de  ID da Empresa o Qual Deseja Consultar os Produtos;
+        private List<int> _idEmpresaParceira = new List<int>();       //Lista de  ID da Empresa o Qual Deseja Consultar os Produtos;
 
 
         private List<int> _id = new List<int>();
@@ -23,15 +17,15 @@ namespace Core.Specifications
             set => _id = value.Select(b => b).ToList();
         }
 
-      
-        public List<int> IDEmpresaParceira
+
+        public List<int> IdEmpresaParceira
         {
             get => _idEmpresaParceira;
             set => _idEmpresaParceira = value;
         }
 
 
-        public List<int> FabricantesId
+        public List<int> IdFabricante
         {
             get => _fabricantes;
             set => _fabricantes = value;

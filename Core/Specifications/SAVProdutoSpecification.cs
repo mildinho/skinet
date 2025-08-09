@@ -13,7 +13,7 @@ namespace Core.Specifications
         x =>
 
             ( specParams.Id.Contains(x.id)) ||
-            ( specParams.FabricantesId.Contains(x.fabricanteid))
+            ( specParams.IdFabricante.Contains(x.fabricanteid))
         )
         {
             //Incluindo os Similares
@@ -24,7 +24,7 @@ namespace Core.Specifications
 
             // Incluindo os Detalhes do Produto
             Includes.Add(x => x.produtodetalhe.
-                Where(d => specParams.IDEmpresaParceira.Contains(d.empresaid)));
+                Where(d => specParams.IdEmpresaParceira.Contains(d.empresaid)));
           
 
             ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);

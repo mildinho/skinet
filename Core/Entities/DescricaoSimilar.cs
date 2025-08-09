@@ -10,7 +10,7 @@ namespace Core.Entities
 
 
         [ForeignKey("Descricao")]
-        public int savdescricaoid { get; set; }
+        public int descricaoid { get; set; }
 
 
 
