@@ -1,0 +1,27 @@
+@if (produto) {
+
+    <mat-card appearance="raised" routerLink="/sales/{{produto.id}}" class="product-card">
+        @if(produto_imagem) {
+            <img [src]="produto_imagem[0].url+produto_imagem[0].filename" alt="Produto Imag {{produto.referencia}}">
+        }
+        <mat-card-content class="mt-2">
+
+            <h2 class="text-sm font-semibold uppercase">{{produto.referencia}}</h2>
+             @if(produto_detalhe) {
+                 <p class="font-light">{{produto_detalhe[0].base_venda| currency}}</p>
+            }
+            
+         
+
+        </mat-card-content>
+        <mat-card-actions (click) = "$event.stopPropagation()">
+            <button mat-stroked-button class="w-full" (click)="cartSevice.addItemToCart(produto)">
+                <mat-icon>add_shopping_cart</mat-icon>
+                Adicionar
+            </button>
+        </mat-card-actions>
+    </mat-card>
+}
+@else {
+    <!-- <p>No product found</p> -->
+}

@@ -9,6 +9,8 @@ import { loadingInterceptor } from './core/interceptors/loading.interceptor';
 import { InitService } from './core/services/init.service';
 import { lastValueFrom } from 'rxjs';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { getPortuguesePaginatorIntl } from './portuguese-paginator-intl';
 
 function initializeApp(initService : InitService) {
   return () => lastValueFrom(initService.init()).finally(() => {
@@ -35,6 +37,10 @@ export const appConfig: ApplicationConfig = {
       useFactory: initializeApp,
       multi: true,
       deps: [InitService]
-    }
+    },
+     {
+      provide: MatPaginatorIntl,
+      useValue: getPortuguesePaginatorIntl(),
+    },
   ]
 };
