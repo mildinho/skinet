@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Xml.Linq;
 using Core.Entities;
 
 namespace Infrastructure.Data
@@ -23,10 +24,24 @@ namespace Infrastructure.Data
             }
 
 
+            // CADASTRANDO PRODUTO
+            if (!context.DeliveryMethods.Any())
+            {
+
+                var dmData = await File.ReadAllTextAsync("../Infrastructure/Data/SeedData/delivery.json");
+
+                var methods = JsonSerializer.Deserialize<List<DeliveryMethod>>(dmData);
+                if (methods == null) return;
+
+                context.DeliveryMethods.AddRange(methods);
+                await context.SaveChangesAsync();
+            }
+
+
             // CADASTRANDO DA EMPRESA
             if (!context.Empresa.Any())
             {
-                List<Empresa> empresaList =[];
+                List<Empresa> empresaList = [];
 
                 empresaList.Add(new Empresa
                 {
