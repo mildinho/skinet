@@ -37,10 +37,10 @@ namespace Infrastructure.Data
                 x => idProdutos.Contains(x.produtoid)
             );
 
-            idSimilar = await queryDescricaoSimilar.Select(x => x.savdescricaoid).ToListAsync();
+            idSimilar = await queryDescricaoSimilar.Select(x => x.descricaoid).ToListAsync();
 
             queryDescricaoSimilar = queryDescricaoSimilar.Where(
-                x => idSimilar.Contains(x.savdescricaoid)
+                x => idSimilar.Contains(x.descricaoid)
             );
 
             idSimilar = await queryDescricaoSimilar.Select(x => x.produtoid).ToListAsync();

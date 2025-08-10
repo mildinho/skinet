@@ -16,7 +16,7 @@ namespace Infrastructure.Config
         {
 
             builder.HasIndex(x => x.produtoid);
-            builder.HasIndex(x => x.savdescricaoid);
+            builder.HasIndex(x => x.descricaoid);
 
         }
     }

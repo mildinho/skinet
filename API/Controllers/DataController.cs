@@ -429,7 +429,7 @@ namespace API.Controllers
                 descricao_similar_novo.Add(new DescricaoSimilar
                 {
                     produtoid = produto.id,
-                    savdescricaoid = descricao_base.FirstOrDefault(d => d.descricao == produto.descricao)?.id ?? 0
+                    descricaoid = descricao_base.FirstOrDefault(d => d.descricao == produto.descricao)?.id ?? 0
                 });
             }
 

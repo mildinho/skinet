@@ -1,6 +1,8 @@
 https://github.com/TryCatchLearn/skinet-2024/tree/main
 // This file is part of the skinet-2024 repository.
 
+// Strip de Pagamento ( utilizando neste aplicativo )
+www.stripe.com
 
 Para subir o docker na mao
  docker compose up
