@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
 
-    public class FichaClienteController(IGenericRepository<FichaCliente> repository, 
+    public class FichaClienteController(IUnitOfWork unitow,
         ILogger<FichaClienteController> logger) : BaseAPIController
     {
 
@@ -16,7 +16,7 @@ namespace API.Controllers
         {
             logger.LogInformation("Solicitação para obter previsão do tempo recebida.");
 
-            var obj = await repository.GetByIdAsync(id);
+            var obj = await unitow.Repository<FichaCliente>().GetByIdAsync(id);
             if (obj == null) return NotFound();
 
             FichaClienteDto objDto = obj;
@@ -29,9 +29,10 @@ namespace API.Controllers
         public async Task<ActionResult<FichaClienteDto>> Create(FichaClienteDto objDto)
         {
             FichaCliente fichaCliente = objDto;
-            repository.Add(fichaCliente);
+          
+            unitow.Repository<FichaCliente>().Add(fichaCliente);
 
-            if (await repository.SaveChangesAsync())
+            if (await unitow.Complete())
             {
                 return CreatedAtAction(nameof(GetById), new { id = objDto.id }, objDto);
             }
@@ -47,12 +48,12 @@ namespace API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var fichaCliente = await repository.GetByIdAsync(id);
+            var fichaCliente = await unitow.Repository<FichaCliente>().GetByIdAsync(id);
             if (fichaCliente == null) return NotFound();
 
 
-            repository.Remove(fichaCliente);
-            if (await repository.SaveChangesAsync())
+            unitow.Repository<FichaCliente>().Remove(fichaCliente);
+            if (await unitow.Complete())
             {
                 return NoContent();
             }
@@ -72,8 +73,8 @@ namespace API.Controllers
             if (!ProductExist(id)) return NotFound();
 
 
-            repository.Update(fichaCliente);
-            if (await repository.SaveChangesAsync())
+            unitow.Repository<FichaCliente>().Update(fichaCliente);
+            if (await unitow.Complete())
             {
                 return NoContent();
             }
@@ -88,7 +89,7 @@ namespace API.Controllers
 
         private bool ProductExist(int id)
         {
-            return repository.Exists(id);
+            return unitow.Repository<FichaCliente>().Exists(id);
         }
 
     }

@@ -35,6 +35,7 @@ builder.Services.AddScoped<ISAVBuscaProduto, SAVBuscaProduto>();
 
 
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddCors();
 
 builder.Services.AddSingleton<IConnectionMultiplexer>(x =>
@@ -49,6 +50,9 @@ builder.Services.AddSingleton<ICartService, CartService>();
 // esta informação esta no storecontext.cs
 builder.Services.AddAuthorization();
 builder.Services.AddIdentityApiEndpoints<AppUser>().AddEntityFrameworkStores<StoreContext>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddSignalR();
+
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
