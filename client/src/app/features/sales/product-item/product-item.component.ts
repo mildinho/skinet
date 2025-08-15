@@ -4,11 +4,11 @@ import { CurrencyPipe } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { CartService } from '../../../core/services/cart.service';
 import { Produto } from '../../../shared/models/produto';
 import { Produto_Imagem } from '../../../shared/models/produto_imagem';
 import { Produto_Similar } from '../../../shared/models/produto_similar';
 import { Produto_Detalhe } from '../../../shared/models/produto_detalhe';
+import { CarrinhoService } from '../../../core/services/carinho.service';
 
 @Component({
   selector: 'app-product-item',
@@ -24,7 +24,7 @@ export class ProductItemComponent {
   @Input() produto_imagem? : Produto_Imagem[];
   @Input() produto_similar? : Produto_Similar[];
 
-  cartSevice = inject(CartService);
+  cartSevice = inject(CarrinhoService);
 
 
 }
