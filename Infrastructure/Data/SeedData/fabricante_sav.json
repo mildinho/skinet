@@ -1,5 +1,5 @@
 [
- {"id_legado":"0000000001","razao_social":"ROBERT BOSCH teste","fantasia":"BOSCH","cnpj_cpf":"45990181000189"}
+{"id_legado":"0000000001","razao_social":"ROBERT BOSCH LTDA","fantasia":"BOSCH","cnpj_cpf":"45990181000189"}
 ,{"id_legado":"0000000003","razao_social":"OSPINA INDUSTRIA DE AUTO PECAS LTDA","fantasia":"OSPINA","cnpj_cpf":"52615705000117"}
 ,{"id_legado":"0000000005","razao_social":"FIAMM LATIN AMERICA COMPONENTES AUT.LTDA","fantasia":"FIAMM-Buzinas","cnpj_cpf":"02489022000192"}
 ,{"id_legado":"0000000008","razao_social":"SCHUNK DO BRASIL SINTER. E ELETROG. LTDA","fantasia":"SCHUNK-Esc.\/P.Esc.","cnpj_cpf":"61410841000161"}
@@ -89,7 +89,6 @@
 ,{"id_legado":"0000001237","razao_social":"SINALSUL IND. DE AUTOPECAS LTDA","fantasia":"SINALSUL","cnpj_cpf":"90097791000102"}
 ,{"id_legado":"0000001263","razao_social":"DYNA INDUSTRIA E COMERCIO LTDA.","fantasia":"DYNA-Palhetas","cnpj_cpf":"61354148000119"}
 ,{"id_legado":"0000001288","razao_social":"ALPEN IND. COM. DE ARTEF. PLAST.LTDA","fantasia":"ALPENFIX ACESS.","cnpj_cpf":"69285922000199"}
-,{"id_legado":"0000001297","razao_social":"BOMAO AUTO PECAS LTDA","fantasia":"MULTI QUALITA","cnpj_cpf":"11996730000100"}
 ,{"id_legado":"0000001927","razao_social":"TSA TECNOLOGIA EM SIST. AUTOMOTIVOS LTDA","fantasia":"TSA Sensor\/Tampas","cnpj_cpf":"05745983000109"}
 ,{"id_legado":"0000001931","razao_social":"KFK ESCOVAS E PECAS TEXTEIS EIRELI EPP","fantasia":"FLEX CARD","cnpj_cpf":"17692777000167"}
 ,{"id_legado":"0000002146","razao_social":"WILLTEC INDUSTRIA E COMERCIO LTDA","fantasia":"WILLTEC","cnpj_cpf":"96474523000149"}
@@ -112,6 +111,7 @@
 ,{"id_legado":"0000005359","razao_social":"OSRAM COM DE SOLUCOES DE ILUMINACAO LTDA","fantasia":"OSRAM - Lampadas","cnpj_cpf":"23900832000321"}
 ,{"id_legado":"0000005408","razao_social":"CONTINENTAL IND.E COM.PECAS REP AUT LTDA","fantasia":"CONTINENTAL AUTOMO","cnpj_cpf":"07425860000205"}
 ,{"id_legado":"0000005672","razao_social":"ALOG COMERCIO IMPOR E EXP. EIRELI-ME","fantasia":"NIGHT LED","cnpj_cpf":"23140190000148"}
+,{"id_legado":"0000005938","razao_social":"CAMPINAS BATERIAS LTDA","fantasia":"HELIAR Baterias","cnpj_cpf":"23835343000171"}
 ,{"id_legado":"0000006841","razao_social":"HELLA DO BRASIL AUTOMOTIVE LTDA","fantasia":"HELLA Lampadas","cnpj_cpf":"14502921000400"}
 ,{"id_legado":"0000006991","razao_social":"WEGA MOTORS LTDA","fantasia":"WEGA FILTROS","cnpj_cpf":"05097311000134"}
 ,{"id_legado":"0000007062","razao_social":"PLASFER IND.COM.DE PLASTICO E FERRO LTDA","fantasia":"PLASFER","cnpj_cpf":"05729356000184"}
@@ -175,7 +175,6 @@
 ,{"id_legado":"0000021059","razao_social":"FLAPS PRODUTOS AUTOMOTIVOS LTDA","fantasia":"LUXCAR","cnpj_cpf":"11561922000194"}
 ,{"id_legado":"0000021375","razao_social":"SIBERIA MARQUES DA SILVA MATERIAL ELETRI","fantasia":"ORIGINAL-Bicos Inj","cnpj_cpf":"31980648000103"}
 ,{"id_legado":"0000021487","razao_social":"GMG - SENSORES AUTOMOTIVOS LTDA","fantasia":"GMG SENSORES","cnpj_cpf":"17809571000174"}
-,{"id_legado":"0000022104","razao_social":"AVERY MULTI MARCA LTDA","fantasia":"LUMI Multi Marca","cnpj_cpf":"50542183000145"}
 ,{"id_legado":"0000022271","razao_social":"LITENS AUTOMOTIVE DO BRASIL LTDA","fantasia":"LITENS","cnpj_cpf":"02588877000170"}
 ,{"id_legado":"0000022364","razao_social":"DM DISTRIBUIDORA DE PECAS LTDA","fantasia":"YMAX","cnpj_cpf":"53076920000150"}
 ,{"id_legado":"0000022505","razao_social":"YIWU COMERCIAL LTDA","fantasia":"NEXE DO BRASIL","cnpj_cpf":"38000817000213"}
@@ -193,4 +192,5 @@
 ,{"id_legado":"0000025697","razao_social":"PST ELETRONICA LTDA","fantasia":"POSITRON","cnpj_cpf":"84496066000295"}
 ,{"id_legado":"0000025698","razao_social":"PST ELETRONICA LTDA","fantasia":"POSITRON","cnpj_cpf":"84496066000104"}
 ,{"id_legado":"0000025872","razao_social":"GATES DO BRASIL IND COM LT","fantasia":"GATES","cnpj_cpf":"61083804001400"}
+,{"id_legado":"0000025981","razao_social":"FABELT INDUSTRIA DE AUTO PECAS LTDA","fantasia":"FABELT","cnpj_cpf":"59585642000142"}
 ]

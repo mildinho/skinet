@@ -418,7 +418,7 @@ namespace API.Controllers
             var produto_base = context.Produto.Select(p => new { p.id, p.descricao }).ToList();
             var descricao_base = context.Descricao.ToList();
 
-            context.Database.ExecuteSqlRaw("DELETE FROM SAVDescricaoSimilar");
+            context.Database.ExecuteSqlRaw("DELETE FROM DescricaoSimilar");
             await context.SaveChangesAsync();
 
             var descricao_similar_novo = new List<DescricaoSimilar>();
