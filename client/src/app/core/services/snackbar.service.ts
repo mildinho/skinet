@@ -9,16 +9,25 @@ export class SnackbarService {
    private snackbar = inject(MatSnackBar);
 
    error(message: string) {
-    this.snackbar.open(message, 'Close', {
+    this.snackbar.open(message, 'Fechar', {
       duration: 4000,
       panelClass: ['snackbar-error']
     });
    }
 
    success(message: string) {
-    this.snackbar.open(message, 'Close', {
+    this.snackbar.open(message, 'Fechar', {
       duration: 4000,
       panelClass: ['snackbar-success']
+
+    });
+   }
+
+   info(message: string) {
+    this.snackbar.open(message, 'Fechar', {
+      duration: 4000,
+      panelClass: ['snackbar-info']
+
     });
    }
 

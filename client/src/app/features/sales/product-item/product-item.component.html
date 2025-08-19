@@ -1,5 +1,6 @@
 @if (produto) {
 
+    
     <mat-card appearance="raised" routerLink="/sales/{{produto.id}}" class="product-card">
         @if(produto_imagem) {
             <img [src]="produto_imagem[0].url+produto_imagem[0].filename" alt="Produto Imag {{produto.referencia}}">

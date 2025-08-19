@@ -11,6 +11,9 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
+
+      
+
       if (err.status === 400) {
         if (err.error.errors) {
 
@@ -33,7 +36,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         snackbar.error(err.error.title || err.message);
       }
       if (err.status === 404) {
+        if (err.url?.includes('api/BuscaProduto')) {
+          
+        } else {
         router.navigate(['/not-found']);
+        }
       }
       if (err.status === 500) {
         const navigationExtras: NavigationExtras = {

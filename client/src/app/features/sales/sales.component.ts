@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Product } from '../../shared/models/product';
 import { ProductItemComponent } from "./product-item/product-item.component";
 import { FiltersDialogComponent } from './filters-dialog/filters-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,6 +12,7 @@ import { FormsModule } from '@angular/forms';
 import { SalesParams } from '../../shared/models/salesParams';
 import { SalesService } from '../../core/services/sales.service';
 import { BuscaProduto } from '../../shared/models/buscaproduto';
+import { SnackbarService } from '../../core/services/snackbar.service';
 @Component({  
   selector: 'app-sales',
   standalone: true,
@@ -26,6 +26,7 @@ export class SalesComponent implements OnInit {
 
   private shopService = inject(SalesService);
   private dialogService = inject(MatDialog);
+  private snackBarService = inject(SnackbarService);
  
   products?      : Pagination<BuscaProduto>;
 
@@ -51,8 +52,15 @@ export class SalesComponent implements OnInit {
 
   getProducts(){
     this.shopService.getProducts(this.shopParams).subscribe({
-      next: (response) => this.products = response,
-      error: (error) => console.log(error),
+      next: (response) => {
+        console.log(response);
+        this.products = response
+        console.log(this.products.data);
+        
+      },
+      error: (error) => {
+        this.snackBarService.info(error.error);
+      } 
       
     })
   }
