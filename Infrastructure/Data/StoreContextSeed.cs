@@ -333,9 +333,10 @@ namespace Infrastructure.Data
 
                     images.Add(new ProdutoImagem
                     {
-                        savprodutoid = product.id,
-                        filename = product.referencia,
-                        url = "https://www.furacao.com.br/imagensfuracao/produtosfw/"
+                        produtoid = product.id,
+                        filename = product.referencia+".jpg",
+                        url = "https://www.furacao.com.br/imagensfuracao/produtosfw/"+ 
+                        product.referencia.Substring(0,1)+"/"
                     });
                 }
 

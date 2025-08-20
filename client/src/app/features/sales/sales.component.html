@@ -47,8 +47,8 @@
     
         <div class="grid grid-cols-5 gap-4">
             @for (objeto of products.data; track $index) {
-    
-            <app-product-item [produto]="objeto.produto" 
+            
+            <app-product-item [produto]="objeto" 
                     [produto_imagem]="objeto.imagens"
                     [produto_similar]="objeto.similar"
                     [produto_detalhe]="objeto.detalhe">

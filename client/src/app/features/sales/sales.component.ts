@@ -24,7 +24,7 @@ import { SnackbarService } from '../../core/services/snackbar.service';
 
 export class SalesComponent implements OnInit {
 
-  private shopService = inject(SalesService);
+  private salesService = inject(SalesService);
   private dialogService = inject(MatDialog);
   private snackBarService = inject(SnackbarService);
  
@@ -45,17 +45,17 @@ export class SalesComponent implements OnInit {
 
 
   initializeBrands(){
-    this.shopService.getFabricantes();
+    this.salesService.getFabricantes();
 
     this.getProducts();
   }
 
   getProducts(){
-    this.shopService.getProducts(this.shopParams).subscribe({
+    this.salesService.getProducts(this.shopParams).subscribe({
       next: (response) => {
-        console.log(response);
+//        console.log(response);
         this.products = response
-        console.log(this.products.data);
+//       console.log(this.products.data);
         
       },
       error: (error) => {

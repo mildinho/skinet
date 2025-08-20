@@ -5,5 +5,5 @@ export class SalesParams{
     sort : string = 'name';
     pageNumber = 1;
     pageSize = 10;
-    buscar : string = '13x';
+    buscar : string = 'AJ0';
 }
