@@ -5,8 +5,8 @@ namespace API.DTOs
 {
     public class ProdutoDetalheDto
     {
-        public int savempresaid { get; set; }
-        public int savprodutoid { get; set; }
+        public int empresaid { get; set; }
+        public int produtoid { get; set; }
 
         public string referencia { get; set; } = string.Empty;
 

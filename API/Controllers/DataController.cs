@@ -301,7 +301,7 @@ namespace API.Controllers
             {
                 var item = dados[i];
 
-                if (item.savempresaid <= 0)
+                if (item.empresaid <= 0)
                 {
                     return BadRequest("O ID da Empresa deve ser maior que zero");
                 }
@@ -317,12 +317,12 @@ namespace API.Controllers
                 if (produto is not null)
                 {
 
-                    dados[i].savprodutoid = produto.id; // Associa o ID do produto ao detalhe
+                    dados[i].produtoid = produto.id; // Associa o ID do produto ao detalhe
 
                     var detalhe = new ProdutoDetalhe
                     {
-                        empresaid = item.savempresaid,
-                        produtoid = item.savprodutoid,
+                        empresaid = item.empresaid,
+                        produtoid = item.produtoid,
                         unidade_medida = item.unidade_medida,
                         ncm = item.ncm,
                         multiplo_venda = item.multiplo_venda,
@@ -335,8 +335,8 @@ namespace API.Controllers
                     };
 
                     var dados_detalhe = await context.ProdutoDetalhe.AsNoTracking().
-                        Where(x => x.empresaid == item.savempresaid &&
-                                    x.produtoid == item.savprodutoid).FirstOrDefaultAsync();
+                        Where(x => x.empresaid == item.empresaid &&
+                                    x.produtoid == item.produtoid).FirstOrDefaultAsync();
 
                     // ATUALIZA DETALHE EXISTENTE
                     if (dados_detalhe is not null)

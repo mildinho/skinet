@@ -1,6 +1,6 @@
 export class SalesParams{
     id : string[] = [];
-    idempresaparceira : string[] = ['1'];
+    idempresaparceira : string[] = ['2'];
     idfabricantes : string[] = [];
     sort : string = 'name';
     pageNumber = 1;

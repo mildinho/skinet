@@ -26,5 +26,8 @@ export class ProductItemComponent {
 
   cartSevice = inject(CarrinhoService);
 
+   ngOnInit(): void {
+    console.log('Detalhes do produto:', this.produto_detalhe);
+  }
 
 }

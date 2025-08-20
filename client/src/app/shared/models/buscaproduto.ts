@@ -14,7 +14,7 @@ export type BuscaProduto = {
     conversao : string;
     numero_fabrica : string
    // produto : Produto,
-    detalhe : Produto_Detalhe[],
+    produtodetalhe : Produto_Detalhe[],
     imagens : Produto_Imagem[],
     similar : Produto_Similar[]
 }

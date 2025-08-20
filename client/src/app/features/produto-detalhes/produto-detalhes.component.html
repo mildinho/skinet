@@ -7,9 +7,7 @@
                     
                     @if(product.data[0].imagens  && product.data[0].imagens.length >= 0) {
                                 <img class="w-full" [src]="product.data[0].imagens[0].url+product.data[0].imagens[0].filename" alt="Produto: {{product.data[0].referencia}}">
-
-                              
-                            }
+                    }
                     
                 </div>
 
@@ -19,7 +17,7 @@
                     <p> Você tem {{quantityInCart}} no seu carrinho</p>
 
                     <div class="mt-4 items-center gap-4 flex">
-                        <p class="text-3xl font-extrabold text-gray-900">{{product.data[0].detalhe[0].base_venda| currency}}</p>
+                        <p class="text-3xl font-extrabold text-gray-900">{{product.data[0].produtodetalhe[0].base_venda| currency}}</p>
                         <p class="text-green-500 font-bold">Em Estoque</p>
                     </div>
 

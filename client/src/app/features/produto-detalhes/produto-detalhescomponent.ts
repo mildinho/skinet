@@ -63,12 +63,12 @@ export class ProdutoDetalhesComponent implements OnInit {
       const id = this.activatedRoute.snapshot.paramMap.get('id');
       if (!id) return;
 
-      this.shopParams.id.push(id);
+
+    this.shopParams.id.push(id);
     this.salesService.getProducts(this.shopParams).subscribe({
       next: (response) => {
-//        console.log(response);
+        console.log(response);
         this.product = response
-//       console.log(this.products.data);
         
       },
       error: (error) => {
