@@ -4,12 +4,24 @@
         <div class="max-w-screen-2xl px-4 mx-auto">
             <div class="grid grid-cols-2 gap-8">
                 <div class="max-w-xl mx-auto">
-                    
-                    @if(product.data[0].imagens  && product.data[0].imagens.length >= 0) {
-                                <img class="w-full" [src]="product.data[0].imagens[0].url+product.data[0].imagens[0].filename" alt="Produto: {{product.data[0].referencia}}">
-                    }
-                    
+                    <!-- @if(product.data[0].imagens  && product.data[0].imagens.length > 0) { -->
+                    <!-- <img class="w-full" [src]="product.data[0].imagens[0].url+product.data[0].imagens[0].filename" alt="Produto: {{product.data[0].referencia}}"> -->
+                      <div><h1>fer3</h1></div>
+                    <owl-carousel-o [options]="customOptions">
+                          
+                        @for (slide of product.data[0].imagens; track slide.id) {
+                             
+                        <ng-template carouselSlide [id]="slide.id.toString()">
+                            <img [src]="slide.url+slide.filename" [alt]="product.data[0].referencia" [title]="product.data[0].referencia">
+                        </ng-template>
+                        
+                        }
+                   
+                      </owl-carousel-o>
+                       <div>Some tags before</div>
                 </div>
+
+                
 
                 <div >
                     <h1 class="text-4xl font-semibold text-gray-900">{{product.data[0].referencia}}</h1>
@@ -17,7 +29,7 @@
                     <p> Você tem {{quantityInCart}} no seu carrinho</p>
 
                     <div class="mt-4 items-center gap-4 flex">
-                        <p class="text-3xl font-extrabold text-gray-900">{{product.data[0].produtodetalhe[0].base_venda| currency}}</p>
+                        <p class="text-3xl font-extrabold text-gray-900">{{product.data[0].produtodetalhe[0].base_venda|  realCurrency}}</p>
                         <p class="text-green-500 font-bold">Em Estoque</p>
                     </div>
 

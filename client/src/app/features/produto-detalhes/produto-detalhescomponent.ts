@@ -1,29 +1,25 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ShopService } from '../../core/services/shop.service';
 import { ActivatedRoute } from '@angular/router';
-import { Product } from '../../shared/models/product';
-import { CurrencyPipe } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatDivider } from '@angular/material/divider';
-import { CartService } from '../../core/services/cart.service';
 import { FormsModule } from '@angular/forms';
-import { Produto } from '../../shared/models/produto';
 import { SalesService } from '../../core/services/sales.service';
 import { CarrinhoService } from '../../core/services/carinho.service';
 import { BuscaProduto } from '../../shared/models/buscaproduto';
 import { Pagination } from '../../shared/models/pagination';
 import { SnackbarService } from '../../core/services/snackbar.service';
 import { SalesParams } from '../../shared/models/salesParams';
+import { RealCurrencyPipe } from "../../core/helpers/RealCurrency/real-currency.pipe";
+import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CurrencyPipe, MatButton, MatIcon, MatFormField, MatInput, MatLabel, MatDivider,
-    FormsModule
-  ],
+  imports: [MatButton, MatIcon, MatFormField, MatInput, MatLabel, MatDivider,
+    FormsModule, RealCurrencyPipe, CarouselModule ],
   templateUrl: './produto-detalhes.component.html',
   styleUrl: './produto-detalhes.component.scss'
 })
@@ -33,9 +29,33 @@ export class ProdutoDetalhesComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private cartService = inject(CarrinhoService);
   private snackBarService = inject(SnackbarService);
+  public customOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: true
+  }
   
 
-  //product?: Produto;
+
   shopParams = new SalesParams();
   product?      : Pagination<BuscaProduto>;
   quantityInCart = 0;
@@ -64,10 +84,10 @@ export class ProdutoDetalhesComponent implements OnInit {
       if (!id) return;
 
 
+    this.shopParams.buscar = '';
     this.shopParams.id.push(id);
     this.salesService.getProducts(this.shopParams).subscribe({
       next: (response) => {
-        console.log(response);
         this.product = response
         
       },

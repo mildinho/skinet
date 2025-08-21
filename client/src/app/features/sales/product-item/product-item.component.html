@@ -8,8 +8,8 @@
         <mat-card-content class="mt-2">
 
             <h2 class="text-sm font-semibold uppercase">{{produto.referencia}}</h2>
-             @if(produto_detalhe && produto_detalhe.length >= 0) {
-                 <p class="font-light">{{produto_detalhe[0].base_venda | currency}}</p>
+             @if(produto_detalhe && produto_detalhe.length > 0) {
+                 <p class="font-light">{{produto_detalhe[0].base_venda | realCurrency}}</p>
             }
             
          
