@@ -30,13 +30,13 @@ export class ProdutoDetalhesComponent implements OnInit {
   private cartService = inject(CarrinhoService);
   private snackBarService = inject(SnackbarService);
   public customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: false,
-    touchDrag: false,
-    pullDrag: false,
-    dots: false,
+    loop: false,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: true,
     navSpeed: 700,
-    navText: ['', ''],
+    navText: ['<<', '>>'],
     responsive: {
       0: {
         items: 1
@@ -60,6 +60,7 @@ export class ProdutoDetalhesComponent implements OnInit {
   product?      : Pagination<BuscaProduto>;
   quantityInCart = 0;
   quantity = 1;
+  desconto  = 0;
 
   ngOnInit(): void {
     this.loadProduct();

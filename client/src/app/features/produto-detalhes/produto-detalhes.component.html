@@ -1,64 +1,126 @@
 @if(product) {
 
-    <section class="py-8">
-        <div class="max-w-screen-2xl px-4 mx-auto">
-            <div class="grid grid-cols-2 gap-8">
-                <div class="max-w-xl mx-auto">
-                    <!-- @if(product.data[0].imagens  && product.data[0].imagens.length > 0) { -->
-                    <!-- <img class="w-full" [src]="product.data[0].imagens[0].url+product.data[0].imagens[0].filename" alt="Produto: {{product.data[0].referencia}}"> -->
-                      <div><h1>fer3</h1></div>
-                    <owl-carousel-o [options]="customOptions">
-                          
-                        @for (slide of product.data[0].imagens; track slide.id) {
-                             
-                        <ng-template carouselSlide [id]="slide.id.toString()">
-                            <img [src]="slide.url+slide.filename" [alt]="product.data[0].referencia" [title]="product.data[0].referencia">
-                        </ng-template>
-                        
-                        }
-                   
-                      </owl-carousel-o>
-                       <div>Some tags before</div>
+<section class="py-2">
+    <div class="max-w-screen-2xl px-3 mx-auto">
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <div class="items-center gap-2 flex">
+                    <h1 class="text-4xl font-semibold text-gray-900">Detalhes do Produto</h1>
+                </div>
+             
+
+                <div class="mt-4 items-center gap-2 flex">
+                    <h6>Descrição:</h6>
+                    <p class=" text-gray-500">{{product.data[0].descricao}}</p>
                 </div>
 
-                
+                <div class="mt-2 items-center gap-2 flex">
+                    <h6>Código de Barras:</h6>
+                    <p class=" text-gray-500">{{product.data[0].codigobarra02}}</p>
+                </div>
 
-                <div >
-                    <h1 class="text-4xl font-semibold text-gray-900">{{product.data[0].referencia}}</h1>
+                <div class="mt-2 items-center gap-2 flex">
+                    <h6>Número Original:</h6>
+                    <p class=" text-gray-500">{{product.data[0].numero_original}}</p>
+                </div>
 
-                    <p> Você tem {{quantityInCart}} no seu carrinho</p>
+                <div class="mt-2 items-center gap-2 flex">
+                    <h6>Número Fábrica:</h6>
+                    <p class=" text-gray-500">{{product.data[0].numero_fabrica}}</p>
+                </div>
 
-                    <div class="mt-4 items-center gap-4 flex">
-                        <p class="text-3xl font-extrabold text-gray-900">{{product.data[0].produtodetalhe[0].base_venda|  realCurrency}}</p>
-                        <p class="text-green-500 font-bold">Em Estoque</p>
-                    </div>
+                <div class="mt-2 items-center gap-2 flex">
+                    <h6>Número Conversão:</h6>
+                    <p class=" text-gray-500">{{product.data[0].conversao}}</p>
+                </div>
 
-                    <div class="flex gap-4 mt-6">
-                        <button [disabled]="quantity === quantityInCart" 
-                             (click)="updateCart()"
-                            mat-flat-button class="match-input-height">
-                            
-                            <mat-icon>add_shopping_cart</mat-icon>
-                            {{getButtonText()}}
-                        </button>
-                        
-                       <mat-form-field appearance="outline" class="flex">
-                        <mat-label>Quantidade</mat-label>
-                        <input matInput min="0" type="number" [(ngModel)]="quantity" >
-                       </mat-form-field>
-                    </div>
+                 <div class="mt-2 items-center gap-2 flex">
+                    <h6>NCM:</h6>
+                    <p class=" text-gray-500">{{product.data[0].produtodetalhe[0].ncm}}</p>
+                </div>
 
-                    <mat-divider>
-                    </mat-divider>
-
-                    <p class="mt-6 text-gray-500">{{product.data[0].descricao}}</p>
-                   
+                <div class="mt-2 items-center gap-2 flex">
+                    <h6>Unidade Medida:</h6>
+                    <p class=" text-gray-500">{{product.data[0].produtodetalhe[0].unidade_medida}}</p>
                 </div>
             </div>
+
+
+              
+
+
+            <div>
+                <div class="items-center gap-4 flex">
+                    <h3>Referência:</h3>
+                    <h1 class="text-4xl font-semibold text-gray-900">{{product.data[0].referencia}}</h1>
+                </div>
+                <p class="mt-4"> Você tem {{quantityInCart}} no seu carrinho</p>
+ 
+                <div class="mt-6 items-center gap-4 flex">
+                    <p class="text-3xl font-extrabold text-gray-900">{{product.data[0].produtodetalhe[0].base_venda |
+                        realCurrency}}</p>
+
+                        @if( product.data[0].produtodetalhe[0].saldo_disponivel <= 0) {
+                                <p class="text-red-600 font-bold blink">SEM Estoque</p>
+                    
+                        } 
+                        @else { 
+                                <p class="text-green-500 font-bold">Em Estoque</p>
+                        }
+                </div>
+
+                <div class="flex gap-4 mt-6">
+                    <button [disabled]="quantity === quantityInCart" (click)="updateCart()" mat-flat-button
+                        class="match-input-height">
+
+                        <mat-icon>add_shopping_cart</mat-icon>
+                        {{getButtonText()}}
+                    </button>
+
+                    <mat-form-field appearance="outline" class="flex">
+                        <mat-label>Quantidade</mat-label>
+                        <input matInput min="0" type="number" [(ngModel)]="quantity">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="flex">
+                        <mat-label>Desconto</mat-label>
+                        <input matInput min="0" type="number" [(ngModel)]="desconto">
+                    </mat-form-field>
+                </div>
+
+
+
+
+            </div>
         </div>
-    </section>
+
+        <mat-divider>
+        </mat-divider>
+
+        <div class="max-w-xl mx-auto">
+              
+
+            <owl-carousel-o [options]="customOptions">
+
+                @for (slide of product.data[0].imagens; track slide.id) {
+
+                <ng-template carouselSlide [id]="slide.id.toString()">
+                    <img [src]="slide.url+slide.filename" [alt]="product.data[0].referencia"
+                        [title]="product.data[0].referencia">
+                </ng-template>
+
+                }
+
+            </owl-carousel-o>
+            <div></div>
+
+        </div>
+
+
+    </div>
+</section>
 
 
 } @else {
-    <!-- <h1 class="text-2xl font-bold">Product not found</h1> -->
+<!-- <h1 class="text-2xl font-bold">Product not found</h1> -->
 }
