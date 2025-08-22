@@ -61,10 +61,18 @@
                         realCurrency}}</p>
 
                         @if( product.data[0].produtodetalhe[0].saldo_disponivel <= 0) {
-                                <p class="text-red-600 font-bold blink">SEM Estoque</p>
+                                <p class="text-red-500 font-bold blink">SEM Estoque</p>
                     
                         } 
-                        @else { 
+                        @else if(product.data[0].produtodetalhe[0].saldo_disponivel < product.data[0].produtodetalhe[0].estoque_minimo) {
+                                <p class="text-yellow-500 font-bold">Estoque Baixo</p>
+                    
+                        }
+                        @else if(product.data[0].produtodetalhe[0].saldo_disponivel >= product.data[0].produtodetalhe[0].estoque_maximo) {
+                                <p class="text-blue-500 font-bold">Estoque Alto</p>
+                    
+                        }
+                        @else  { 
                                 <p class="text-green-500 font-bold">Em Estoque</p>
                         }
                 </div>

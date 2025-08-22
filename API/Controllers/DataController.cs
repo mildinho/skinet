@@ -331,7 +331,9 @@ namespace API.Controllers
                         base_atacado = item.base_atacado,
                         base_custo = item.base_custo,
                         base_medio = item.base_medio,
-                        saldo_disponivel = item.saldo_disponivel
+                        saldo_disponivel = item.saldo_disponivel,
+                        estoque_minimo = item.estoque_minimo,
+                        estoque_maximo = item.estoque_maximo
                     };
 
                     var dados_detalhe = await context.ProdutoDetalhe.AsNoTracking().

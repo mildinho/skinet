@@ -10,5 +10,8 @@ export type Produto_Detalhe = {
     base_atacado: number,
     base_custo: number,
     base_medio: number,
-    saldo_disponivel: number
+    saldo_disponivel: number,
+    estoque_minimo: number,
+    estoque_maximo: number
+
 }

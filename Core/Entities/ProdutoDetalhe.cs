@@ -27,5 +27,9 @@ namespace Core.Entities
 
         public decimal? saldo_disponivel { get; set; } = 0;
 
+
+        public decimal? estoque_minimo { get; set; } = 0;
+        public decimal? estoque_maximo { get; set; } = 0;
+
     }
 }
