@@ -24,6 +24,8 @@ namespace Infrastructure.Config
             builder.Property(x => x.multiplo_venda).HasColumnType("decimal(18,4)");
             builder.Property(x => x.base_custo).HasColumnType("decimal(18,4)");
             builder.Property(x => x.base_medio).HasColumnType("decimal(18,4)");
+            builder.Property(x => x.estoque_maximo).HasColumnType("decimal(18,4)");
+            builder.Property(x => x.estoque_minimo).HasColumnType("decimal(18,4)");
 
 
             builder.HasIndex(x =>  new { x.empresaid, x.produtoid}).IsUnique();

@@ -10,6 +10,19 @@ namespace Core.Entities
         public string? fantasia { get; set; } = string.Empty;
         public string? cnpj_cpf { get; set; } = string.Empty;
 
+        public static FabricanteDto FromEntity(Fabricante entity)
+        {
+            return new FabricanteDto
+            {
+                id = entity.id,
+                id_legado = entity.id_legado,
+                razao_social = entity.razao_social,
+                fantasia = entity.fantasia,
+                cnpj_cpf = entity.cnpj_cpf
+
+
+            };
+        }
 
         public static implicit operator Fabricante(FabricanteDto dto)
         {
@@ -23,19 +36,5 @@ namespace Core.Entities
             };
         }
 
-
-        public static implicit operator FabricanteDto(Fabricante entity)
-        {
-            return new FabricanteDto
-            {
-                id = entity.id,
-                id_legado = entity.id_legado,
-                razao_social = entity.razao_social,
-                fantasia = entity.fantasia,
-                cnpj_cpf = entity.cnpj_cpf
-
-
-            };
-        }
     }
 }

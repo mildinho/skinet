@@ -37,18 +37,18 @@ export class SalesComponent implements OnInit {
   ]
 
   shopParams = new SalesParams();
+  
   pageSizeOptions = [5, 10, 15, 20];
 
   ngOnInit(): void {
-      this.initializeBrands();
+      this.CarregaObjetos();
   }
 
 
-  initializeBrands(){
-    this.salesService.getFabricantes();
-
+  CarregaObjetos(){
     this.getProducts();
   }
+
 
   getProducts(){
     this.salesService.getProducts(this.shopParams).subscribe({
@@ -91,7 +91,7 @@ export class SalesComponent implements OnInit {
     const dialogRef = this.dialogService.open(FiltersDialogComponent, {
       minWidth: '500px',
       data: {
-        selectedBrand: this.shopParams.idfabricantes,
+        selectedFabricantes: this.shopParams.idfabricantes,
       }
 
     });
@@ -101,7 +101,7 @@ export class SalesComponent implements OnInit {
         if(result){
           console.log(result);
           
-          this.shopParams.idfabricantes = result.selectedBrand;
+          this.shopParams.idfabricantes = result.selectedFabricantes;
           this.shopParams.pageNumber = 1;
 
 

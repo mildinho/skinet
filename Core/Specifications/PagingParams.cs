@@ -8,7 +8,7 @@ namespace Core.Specifications
 {
     public class  PagingParams
     {
-        private const int MaxPageSize = 50;
+        protected private int MaxPageSize = 50;
 
         private int _pageIndex = 1;
         public int PageIndex
@@ -23,6 +23,7 @@ namespace Core.Specifications
             get => _pageSize;
             set => _pageSize = (value > MaxPageSize) ? MaxPageSize : value;
         }
+
 
     }
 }

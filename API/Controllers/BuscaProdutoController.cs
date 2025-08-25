@@ -55,19 +55,17 @@ namespace API.Controllers
 
 
         [HttpGet("Fabricante")]
-        public async Task<ActionResult<IReadOnlyList<string>>> GetFabricante()
+        public async Task<ActionResult<IReadOnlyList<FabricanteDto>>> GetFabricante(
+             [FromQuery] FabricanteSpecParams specParams)
         {
-            List<Fabricante> fabricante = (List<Fabricante>)await unitow.Repository<Fabricante>().ListAllAsync();
-            List<FabricanteDto> fabricanteDto = new();
+            var spec = new FabricanteSpecification(specParams);
+           
+            return await CreatePagedResult_DTO<Fabricante,FabricanteDto>
+                (unitow.Repository<Fabricante>(), spec, specParams.PageIndex, specParams.PageSize);
 
-            foreach (var item in fabricante)
-            {
-                FabricanteDto fabDto = item;
-                fabricanteDto.Add(fabDto);
-
-            }
-            return Ok(fabricanteDto);
         }
+
+
     }
 
 

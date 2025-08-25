@@ -11,8 +11,8 @@ namespace Core.Specifications
     {
         public SAVProdutoSpecification(SAVProdutoSpecParams specParams) : base(
         x =>
-
             ( specParams.Id.Contains(x.id)) ||
+
             ( specParams.IdFabricante.Contains(x.fabricanteid))
         )
         {
