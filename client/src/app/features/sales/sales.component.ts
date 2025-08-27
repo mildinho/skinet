@@ -99,7 +99,7 @@ export class SalesComponent implements OnInit {
     dialogRef.afterClosed().subscribe({
       next: (result) => {
         if(result){
-          console.log(result);
+          console.log(result.selectedFabricantes);
           
           this.shopParams.idfabricantes = result.selectedFabricantes;
           this.shopParams.pageNumber = 1;

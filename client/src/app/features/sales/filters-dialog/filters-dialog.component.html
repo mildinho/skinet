@@ -6,7 +6,7 @@
     <div class="flex p-4">
 
 
-        <mat-select [formControl]="formFabricante" multiple>
+        <mat-select [(ngModel)]="selectedFabricantes" multiple>
             @for (fabricante of listaFabricantes?.data; track fabricante) {
             
             <mat-option [value]="fabricante.id"> {{fabricante.fantasia}} - ( {{fabricante.id_legado}} )</mat-option>
@@ -24,4 +24,4 @@
     </div>
 
 
-</div>>
+</div>

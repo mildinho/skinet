@@ -3,7 +3,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
 import { MatDivider } from '@angular/material/divider';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SalesService } from '../../../core/services/sales.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -27,9 +27,8 @@ export class FiltersDialogComponent implements OnInit {
   private dialogRef = inject(MatDialogRef<FiltersDialogComponent>);
   data = inject(MAT_DIALOG_DATA);
 
-  selectedFabricante: string[] = this.data.selectedFabricante;
+  selectedFabricantes: string[] = this.data.selectedFabricantes;
 
-  formFabricante = new FormControl('');
   toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
 
   fabricanteParams = new FabricanteParams();
@@ -64,7 +63,7 @@ export class FiltersDialogComponent implements OnInit {
 
   applyFilters() {
     this.dialogRef.close({
-      selectedFabricante: this.selectedFabricante,
+      selectedFabricantes: this.selectedFabricantes,
     });
   }
 }
