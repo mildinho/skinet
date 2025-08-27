@@ -11,9 +11,9 @@ namespace Core.Specifications
     {
         public SAVProdutoSpecification(SAVProdutoSpecParams specParams) : base(
         x =>
-            ( specParams.Id.Contains(x.id)) ||
+            ( specParams.Id.Contains(x.id.ToString())) ||
 
-            ( specParams.IdFabricante.Contains(x.fabricanteid))
+            ( specParams.IdFabricante.Contains(x.fabricanteid.ToString()))
         )
         {
             //Incluindo os Similares
@@ -24,7 +24,7 @@ namespace Core.Specifications
 
             // Incluindo os Detalhes do Produto
             Includes.Add(x => x.produtodetalhe.
-                Where(d => specParams.IdEmpresaParceira.Contains(d.empresaid)));
+                Where(d => specParams.IdEmpresaParceira.Contains(d.empresaid.ToString())));
           
 
             ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
@@ -43,50 +43,6 @@ namespace Core.Specifications
             }
         }
 
-
-
-
-
-
-
-       // public SAVProdutoSpecification(SAVProdutoSpecParams specParams) : base(
-       //x =>
-
-       //      (string.IsNullOrEmpty(specParams.Search) || x.referencia == specParams.Search.ToUpper()) ||
-       //      (string.IsNullOrEmpty(specParams.Search) || x.numero_fabrica == specParams.Search.ToUpper()) ||
-       //      (string.IsNullOrEmpty(specParams.Search) || x.codigobarra01 == specParams.Search) ||
-       //      (string.IsNullOrEmpty(specParams.Search) || x.codigobarra02 == specParams.Search) ||
-       //      (string.IsNullOrEmpty(specParams.Search) || x.numero_original == specParams.Search) ||
-       //      (string.IsNullOrEmpty(specParams.Search) || x.descricao.Contains(specParams.Search)) &&
-
-       //    (specParams.Fabricantes.Count == 0 || specParams.Fabricantes.Contains(x.idparceiro)) &&
-
-       //    (specParams.InStock == false || x.savprodutodetalhe != null && x.savprodutodetalhe.Any(d => d.saldo_disponivel > 0))
-
-       //)
-       // {
-
-       //     Includes.Add(x => x.savprodutosimilar);
-
-
-       //     Includes.Add(x => x.savprodutodetalhe);
-       //     Includes.Add(x => x.imagens);
-
-       //     ApplyPaging(specParams.PageSize * (specParams.PageIndex - 1), specParams.PageSize);
-
-       //     switch (specParams.Sort)
-       //     {
-       //         case "fabricanteAsc":
-       //             AddOrderBy(p => p.idparceiro);
-       //             break;
-       //         case "fabricanteDesc":
-       //             AddOrderByDescending(p => p.idparceiro);
-       //             break;
-       //         default:
-       //             AddOrderBy(p => p.referencia);
-       //             break;
-       //     }
-       // }
 
     }
 

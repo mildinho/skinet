@@ -36,7 +36,7 @@ namespace API.Controllers
 
             foreach (var item in ids)
             {
-                specParams.Id.Add(item);
+                specParams.Id.Add(item.ToString());
             }
 
             if (specParams.Id.Count == 0)

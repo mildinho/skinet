@@ -2,33 +2,34 @@
 {
     public class SAVProdutoSpecParams : PagingParams
     {
-        private List<int> _fabricantes = new List<int>();
-        private List<int> _idEmpresaParceira = new List<int>();       //Lista de  ID da Empresa o Qual Deseja Consultar os Produtos;
-
-
-        private List<int> _id = new List<int>();
+        private List<string> _fabricantes = new List<string>();
+        private List<string> _idEmpresaParceira = new List<string>();       //Lista de  ID da Empresa o Qual Deseja Consultar os Produtos;
+        private List<string> _id = new List<string>();
 
         private string _buscar = string.Empty;
 
 
-        public List<int> Id
+        public List<string> Id
         {
             get => _id;
-            set => _id = value.Select(b => b).ToList();
+            set => _id = value.SelectMany(b => b.Split(',',
+                StringSplitOptions.RemoveEmptyEntries)).ToList();
         }
 
 
-        public List<int> IdEmpresaParceira
+        public List<string> IdEmpresaParceira
         {
             get => _idEmpresaParceira;
-            set => _idEmpresaParceira = value;
+            set => _idEmpresaParceira = value.SelectMany(b => b.Split(',',
+                StringSplitOptions.RemoveEmptyEntries)).ToList();
         }
 
 
-        public List<int> IdFabricante
+        public List<string> IdFabricante
         {
             get => _fabricantes;
-            set => _fabricantes = value;
+            set => _fabricantes = value.SelectMany(b => b.Split(',',
+                StringSplitOptions.RemoveEmptyEntries)).ToList();
 
 
         }
