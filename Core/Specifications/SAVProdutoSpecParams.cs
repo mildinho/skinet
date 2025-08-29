@@ -39,7 +39,7 @@
         public string Buscar
         {
             get => _buscar;
-            set => _buscar = value.ToUpper();
+            set => _buscar = value.ToUpper() ?? "";
         }
 
 

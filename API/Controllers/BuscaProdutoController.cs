@@ -18,17 +18,8 @@ namespace API.Controllers
             if (specParams.IdEmpresaParceira == null || specParams.IdEmpresaParceira.Count <= 0)
                 return BadRequest("Deve Informar a Empresa Parceira");
 
-            if ((specParams.Id == null || specParams.Id.Count <= 0) &&
-               (string.IsNullOrEmpty(specParams.Buscar) || specParams.Buscar.Length < 3))
-                return BadRequest("Informe no Minimo 3 Digitos para Buscar");
-
-            if ((specParams.Id == null || specParams.Id.Count == 0) &&
-              string.IsNullOrEmpty(specParams.Buscar))
-                return BadRequest("Informe ao menos um ID de Produto para Buscar");
-
-
             List<int> ids = new List<int>();
-            if (specParams.Buscar != null && specParams.Buscar.Length >= 3)
+            if (!string.IsNullOrEmpty(specParams.Buscar))
             {
                 ids = await buscaProduto.BuscaProduto(specParams.Buscar);
             }
@@ -59,8 +50,8 @@ namespace API.Controllers
              [FromQuery] FabricanteSpecParams specParams)
         {
             var spec = new FabricanteSpecification(specParams);
-           
-            return await CreatePagedResult_DTO<Fabricante,FabricanteDto>
+
+            return await CreatePagedResult_DTO<Fabricante, FabricanteDto>
                 (unitow.Repository<Fabricante>(), spec, specParams.PageIndex, specParams.PageSize);
 
         }

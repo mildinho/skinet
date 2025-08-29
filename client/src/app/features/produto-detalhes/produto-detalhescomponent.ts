@@ -14,12 +14,14 @@ import { SnackbarService } from '../../core/services/snackbar.service';
 import { SalesParams } from '../../shared/models/salesParams';
 import { RealCurrencyPipe } from "../../core/helpers/RealCurrency/real-currency.pipe";
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { CommonModule } from '@angular/common';
+import { MatTooltip } from "@angular/material/tooltip";
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
   imports: [MatButton, MatIcon, MatFormField, MatInput, MatLabel, MatDivider,
-    FormsModule, RealCurrencyPipe, CarouselModule ],
+    FormsModule, RealCurrencyPipe, CarouselModule, CommonModule, MatTooltip],
   templateUrl: './produto-detalhes.component.html',
   styleUrl: './produto-detalhes.component.scss'
 })
@@ -65,20 +67,10 @@ export class ProdutoDetalhesComponent implements OnInit {
   ngOnInit(): void {
     this.loadProduct();
   }
-
-
-  // loadProduct() {
-  //   const id = this.activatedRoute.snapshot.paramMap.get('id');
-  //   if (!id) return;
-
-  //   this.salesService.getProduct(+id).subscribe({
-  //     next: (response) => {
-  //       this.product = response,
-  //       this.updateQuantityInCart();
-  //     },
-  //     error: (error) => console.log(error),
-  //   });
-  // }
+  
+  voltar() {
+    window.history.back();
+  }
 
     loadProduct(){
       const id = this.activatedRoute.snapshot.paramMap.get('id');
